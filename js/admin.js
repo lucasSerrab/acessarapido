@@ -120,6 +120,7 @@ function renderStudents() {
         <td><code style="font-family:var(--font-mono); font-size:12px">${escapeHtml(s.idNumber || '—')}</code></td>
         <td>${escapeHtml(s.validity || '—')}</td>
         <td style="text-align:right; white-space:nowrap">
+          <a href="app.html?as=${s.id}" class="btn btn--ghost btn-view-student" data-id="${s.id}" style="padding:6px 10px; color: var(--brand-700)" title="Ver carteirinha"><i class="fas fa-id-card"></i></a>
           <button class="btn btn--ghost btn-edit-student" data-id="${s.id}" style="padding:6px 10px" title="Editar"><i class="fas fa-pen"></i></button>
           <button class="btn btn--ghost btn-del-student"  data-id="${s.id}" style="padding:6px 10px; color: var(--danger)" title="Excluir"><i class="fas fa-trash"></i></button>
         </td>

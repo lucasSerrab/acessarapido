@@ -45,7 +45,7 @@ const PHOTO_RACHEL   = 'https://i.pravatar.cc/300?img=44';
 const PHOTO_RICARDO  = 'https://i.pravatar.cc/300?img=15';
 
 
-const SEED_VERSION = 2;
+const SEED_VERSION = 3;
 
 async function seedIfEmpty() {
   const db = DB.load();

@@ -21,20 +21,36 @@ const PAGE_TITLES = {
   const user = Auth.requireAuth('login.html');
   if (!user) return;
 
-  // Admin vai direto pro painel
-  if (user.role === 'admin') {
+  // ── Modo impersonação (admin viewing as student via ?as=ID) ──
+  const params = new URLSearchParams(window.location.search);
+  const asId = parseInt(params.get('as'), 10);
+  let viewAsStudent = null;
+  if (asId && user.role === 'admin') {
+    viewAsStudent = DB.students.findById(asId);
+    if (!viewAsStudent) {
+      alert('Aluno #' + asId + ' não encontrado.');
+      window.location.href = 'admin.html';
+      return;
+    }
+  }
+
+  // Admin sem ?as= vai pro painel
+  if (user.role === 'admin' && !viewAsStudent) {
     window.location.href = 'admin.html';
     return;
   }
 
-  // Carrega aluno/professor relacionado
-  const student = user.studentId ? DB.students.findById(user.studentId) : null;
+  // Carrega aluno: impersonação tem prioridade, senão vínculo do user
+  const student = viewAsStudent || (user.studentId ? DB.students.findById(user.studentId) : null);
   const institution = student ? DB.institutions.findById(student.institutionId) : DB.institutions.all()[0];
 
   if (!student) {
     document.body.innerHTML = '<div style="padding:60px; text-align:center;"><h2>Conta sem aluno vinculado.</h2><a href="login.html">Voltar</a></div>';
     return;
   }
+
+  // Banner de impersonação
+  if (viewAsStudent) showImpersonateBanner(student);
 
   // ─── Renderiza dados do usuário no menu ───
   renderUserCard(user, student);
@@ -51,13 +67,31 @@ const PAGE_TITLES = {
   // ─── Navegação entre abas ───
   bindTabs();
 
-  // ─── Logout ───
-  document.getElementById('btn-logout')?.addEventListener('click', () => {
-    if (!confirm('Tem certeza que deseja sair?')) return;
-    Auth.logout();
-    window.location.href = 'login.html';
+  // ─── Logout (todos os botões) ───
+  ['btn-logout', 'btn-logout-top', 'btn-logout-perfil'].forEach(id => {
+    document.getElementById(id)?.addEventListener('click', () => {
+      if (!confirm('Sair da conta?')) return;
+      Auth.logout();
+      window.location.href = 'login.html';
+    });
   });
 })();
+
+
+/** Mostra banner amarelo no topo: "Você está visualizando como X (admin)" */
+function showImpersonateBanner(student) {
+  const banner = document.createElement('div');
+  banner.className = 'impersonate-banner';
+  banner.innerHTML = `
+    <i class="fas fa-eye"></i>
+    <span>Visualizando carteirinha de <strong>${escapeHtml(student.name)}</strong> (modo admin)</span>
+    <a href="admin.html" class="impersonate-banner__back">
+      <i class="fas fa-arrow-left"></i> Voltar ao painel
+    </a>
+  `;
+  document.body.insertBefore(banner, document.body.firstChild);
+  document.body.classList.add('has-impersonate-banner');
+}
 
 
 /* ── User card no rodapé do sidebar ─────────────────────── */
