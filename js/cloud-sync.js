@@ -28,15 +28,16 @@
 window.CloudSync = (function () {
 
   // ╔════════════════════════════════════════════════════════════╗
-  // ║  COLE AQUI A CONFIG DO SEU PROJETO FIREBASE                ║
+  // ║  CONFIG DO PROJETO FIREBASE (acessarapido-e252f)           ║
   // ╚════════════════════════════════════════════════════════════╝
   const FIREBASE_CONFIG = {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
+    apiKey: "AIzaSyBlT8dwP9mKDBx5x1E7DHnOEdtXPfvajbY",
+    authDomain: "acessarapido-e252f.firebaseapp.com",
+    projectId: "acessarapido-e252f",
+    storageBucket: "acessarapido-e252f.firebasestorage.app",
+    messagingSenderId: "1069396020648",
+    appId: "1:1069396020648:web:12b0cfc593d5285f5c219d",
+    measurementId: "G-HCH1K058FF"
   };
 
   // Documento único que guarda o estado inteiro do app
