@@ -51,9 +51,29 @@ window.CloudSync = (function () {
   let pushTimer = null;
   let firestore = null;         // módulos firebase carregados
   let unsubscribe = null;
+  let lastAppliedHash = null;   // hash do último estado aplicado (evita eco)
 
   const isConfigured = () =>
     !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+
+  /** Hash rápido de string (djb2) — só para deduplicar snapshots */
+  function _hash(str) {
+    let h = 5381;
+    for (let i = 0; i < str.length; i++) {
+      h = ((h << 5) + h) ^ str.charCodeAt(i);
+    }
+    return h >>> 0;
+  }
+
+  /** Serializa estado ignorando campos voláteis para gerar hash estável */
+  function _stateSignature(state) {
+    if (!state) return '';
+    // Remove updatedAt e sessions antes de hashear
+    const { sessions, meta, ...rest } = state;
+    const cleanMeta = meta ? { ...meta } : {};
+    delete cleanMeta.updatedAt;
+    return JSON.stringify({ ...rest, meta: cleanMeta });
+  }
 
   /**
    * Inicializa o Firebase, faz pull inicial, registra listener
@@ -86,15 +106,17 @@ window.CloudSync = (function () {
       // 1) Pull inicial (se a nuvem tem dados, eles vencem o local)
       const snap = await firestore.getDoc(docRef);
       if (snap.exists()) {
-        _applyRemote(snap.data());
+        _applyRemote(snap.data(), { silent: true });
       } else if (window.DB && DB.load().meta.seeded) {
         // Nuvem vazia mas local já tem dados → faz bootstrap
         await _pushNow();
       }
 
-      // 2) Listener em tempo real
-      unsubscribe = firestore.onSnapshot(docRef, (s) => {
+      // 2) Listener em tempo real (ignora metadata-only e ecos)
+      unsubscribe = firestore.onSnapshot(docRef, { includeMetadataChanges: false }, (s) => {
         if (!s.exists() || applyingRemote) return;
+        // Ignora snapshots que ainda têm escritas locais pendentes (eco do nosso próprio setDoc)
+        if (s.metadata && s.metadata.hasPendingWrites) return;
         _applyRemote(s.data());
       }, (err) => {
         console.warn('[CloudSync] erro no listener:', err);
@@ -117,8 +139,14 @@ window.CloudSync = (function () {
   }
 
   /** Aplica estado remoto no localStorage e re-renderiza a página */
-  function _applyRemote(remote) {
+  function _applyRemote(remote, opts = {}) {
     if (!remote || !window.DB) return;
+
+    // Deduplicação: se o estado é igual ao que já temos aplicado, ignora
+    const sig = _stateSignature(remote);
+    if (sig === lastAppliedHash) return;
+    lastAppliedHash = sig;
+
     const local = DB.load();
 
     // Preserva sessão local (login não sincroniza entre dispositivos)
@@ -135,8 +163,10 @@ window.CloudSync = (function () {
       setTimeout(() => { applyingRemote = false; }, 50);
     }
 
-    // Notifica a página para re-renderizar
-    window.dispatchEvent(new CustomEvent('db:remote-changed', { detail: merged }));
+    // Notifica a página para re-renderizar (a menos que silencioso)
+    if (!opts.silent) {
+      window.dispatchEvent(new CustomEvent('db:remote-changed', { detail: merged }));
+    }
   }
 
   /** Patch em DB.save para empurrar pra nuvem após cada save local */
@@ -160,6 +190,8 @@ window.CloudSync = (function () {
       const local = DB.load();
       // Não envia sessões (login é local)
       const { sessions, ...payload } = local;
+      // Marca hash ANTES de enviar — quando o snapshot ecoar de volta, será ignorado
+      lastAppliedHash = _stateSignature(payload);
       payload.meta = { ...payload.meta, updatedAt: Date.now() };
       await firestore.setDoc(docRef, payload);
       _setStatus('online');
