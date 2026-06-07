@@ -65,6 +65,17 @@ window.CloudSync = (function () {
     return h >>> 0;
   }
 
+  /** JSON.stringify estável (chaves ordenadas) — garante hash consistente */
+  function _stableStringify(obj) {
+    if (obj === null || obj === undefined) return JSON.stringify(obj);
+    if (typeof obj !== 'object') return JSON.stringify(obj);
+    if (Array.isArray(obj)) {
+      return '[' + obj.map(_stableStringify).join(',') + ']';
+    }
+    const keys = Object.keys(obj).sort();
+    return '{' + keys.map(k => JSON.stringify(k) + ':' + _stableStringify(obj[k])).join(',') + '}';
+  }
+
   /** Serializa estado ignorando campos voláteis para gerar hash estável */
   function _stateSignature(state) {
     if (!state) return '';
@@ -72,7 +83,7 @@ window.CloudSync = (function () {
     const { sessions, meta, ...rest } = state;
     const cleanMeta = meta ? { ...meta } : {};
     delete cleanMeta.updatedAt;
-    return JSON.stringify({ ...rest, meta: cleanMeta });
+    return _hash(_stableStringify({ ...rest, meta: cleanMeta })).toString();
   }
 
   /**
@@ -144,7 +155,11 @@ window.CloudSync = (function () {
 
     // Deduplicação: se o estado é igual ao que já temos aplicado, ignora
     const sig = _stateSignature(remote);
-    if (sig === lastAppliedHash) return;
+    if (sig === lastAppliedHash) {
+      console.debug('[CloudSync] snapshot ignorado (igual ao atual)');
+      return;
+    }
+    console.info('[CloudSync] aplicando snapshot remoto', { silent: !!opts.silent, sig });
     lastAppliedHash = sig;
 
     const local = DB.load();

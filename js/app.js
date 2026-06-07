@@ -80,14 +80,24 @@ const PAGE_TITLES = {
   });
 
   // ─── Reage a edições feitas em outro dispositivo ───
-  let reloadTimer = null;
+  let rerenderTimer = null;
   window.addEventListener('db:remote-changed', () => {
-    // Debounce: agrupa várias mudanças em 1 reload
-    clearTimeout(reloadTimer);
-    reloadTimer = setTimeout(() => {
-      console.info('[App] Dados atualizados na nuvem — recarregando…');
-      window.location.reload();
-    }, 800);
+    clearTimeout(rerenderTimer);
+    rerenderTimer = setTimeout(() => {
+      console.info('[App] Dados atualizados na nuvem — re-renderizando…');
+      // Recarrega o aluno e instituição do storage atualizado
+      const studentId = viewAsStudent ? asId : user.studentId;
+      const freshStudent = DB.students.findById(studentId);
+      const freshInst = freshStudent ? DB.institutions.findById(freshStudent.institutionId) : null;
+      if (!freshStudent || !freshInst) return;
+
+      // Re-aplica todos os dados visíveis
+      Card.init(freshStudent, freshInst);
+      renderBoletim(freshStudent);
+      renderInstituicao(freshInst);
+      renderMateriais(freshStudent, freshInst);
+      renderPerfil(user, freshStudent);
+    }, 400);
   });
 })();
 
