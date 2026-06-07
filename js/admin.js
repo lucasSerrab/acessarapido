@@ -28,6 +28,9 @@ let _pendingLogo  = null;
 let _studentsFilter = { search: '', institution: '' };
 
 (async function main() {
+  // Sincroniza com a nuvem antes de tudo
+  await CloudSync.init();
+
   await seedIfEmpty();
 
   const me = Auth.requireRole('admin', 'app.html');
@@ -48,6 +51,20 @@ let _studentsFilter = { search: '', institution: '' };
   bindUserModal();
   bindInstModal();
   bindAdvanced();
+
+  // Re-renderiza quando outro dispositivo edita
+  let rerenderTimer = null;
+  window.addEventListener('db:remote-changed', () => {
+    clearTimeout(rerenderTimer);
+    rerenderTimer = setTimeout(() => {
+      console.info('[Admin] Dados atualizados na nuvem — atualizando tabelas…');
+      renderStudents();
+      renderUsers();
+      renderInstitutions();
+      populateStudentInstitutionSelect();
+      populateStudentsFilterInst();
+    }, 600);
+  });
   bindStudentsFilters();
 })();
 

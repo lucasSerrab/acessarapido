@@ -69,6 +69,7 @@
     <header class="app-topbar">
       <div class="app-topbar__title" id="page-title">Carteirinha</div>
       <div class="app-topbar__actions">
+        <span class="sync-status sync-status--offline" data-sync-status><i class="fas fa-cloud-slash"></i> <span>Offline (local)</span></span>
         <button class="icon-btn" title="Notificações">
           <i class="fas fa-bell"></i>
           <span class="icon-btn__dot"></span>
@@ -430,6 +431,7 @@
 
   <!-- Scripts -->
   <script src="js/db.js"></script>
+  <script src="js/cloud-sync.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/seed.js"></script>
   <script src="js/card.js"></script>

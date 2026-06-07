@@ -14,6 +14,9 @@ const PAGE_TITLES = {
 };
 
 (async function main() {
+  // Sincroniza com a nuvem ANTES de tudo (puxa estado remoto se existir)
+  await CloudSync.init();
+
   // Garante seed
   await seedIfEmpty();
 
@@ -74,6 +77,17 @@ const PAGE_TITLES = {
       Auth.logout();
       window.location.href = 'login.html';
     });
+  });
+
+  // ─── Reage a edições feitas em outro dispositivo ───
+  let reloadTimer = null;
+  window.addEventListener('db:remote-changed', () => {
+    // Debounce: agrupa várias mudanças em 1 reload
+    clearTimeout(reloadTimer);
+    reloadTimer = setTimeout(() => {
+      console.info('[App] Dados atualizados na nuvem — recarregando…');
+      window.location.reload();
+    }, 800);
   });
 })();
 

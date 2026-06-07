@@ -1093,6 +1093,46 @@ body {
   margin-top: 1px;
 }
 .info-banner strong { font-weight: 700; }
+
+/* Sync status badge na topbar */
+.sync-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: help;
+  transition: all 0.2s;
+}
+.sync-status i { font-size: 11px; }
+.sync-status--online {
+  background: #dcfce7;
+  color: #166534;
+}
+.sync-status--offline {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.sync-status--syncing {
+  background: #fef3c7;
+  color: #92400e;
+  animation: sync-pulse 1.5s ease-in-out infinite;
+}
+.sync-status--error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+@keyframes sync-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+@media (max-width: 600px) {
+  .sync-status span { display: none; }
+  .sync-status { padding: 6px 8px; }
+}
 .icon-btn__dot {
   position: absolute;
   top: 8px; right: 8px;

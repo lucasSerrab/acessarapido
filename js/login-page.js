@@ -6,6 +6,9 @@
 'use strict';
 
 (async function () {
+  // Sincroniza com a nuvem para pegar usuários cadastrados em outros dispositivos
+  await CloudSync.init();
+
   // Garante que o banco está populado
   await seedIfEmpty();
 

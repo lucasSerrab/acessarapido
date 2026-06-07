@@ -61,6 +61,7 @@
     <header class="app-topbar">
       <div class="app-topbar__title" id="page-title">Carteirinhas</div>
       <div class="app-topbar__actions">
+        <span class="sync-status sync-status--offline" data-sync-status><i class="fas fa-cloud-slash"></i> <span>Offline (local)</span></span>
         <a href="app.html" class="btn btn--ghost"><i class="fas fa-eye"></i> Ver como aluno</a>
       </div>
     </header>
@@ -79,12 +80,13 @@
           </button>
         </div>
 
-        <div class="info-banner">
+        <div class="info-banner" id="sync-info-banner">
           <i class="fas fa-circle-info"></i>
           <div>
-            <strong>Demo local:</strong> os dados são salvos no navegador deste dispositivo (localStorage).
-            Edições feitas aqui não aparecem em outros computadores ou celulares.
-            Use <strong>Avançado → Exportar JSON</strong> para sincronizar manualmente.
+            <strong>Sincronização entre dispositivos:</strong> os dados são salvos
+            <strong>localmente neste navegador</strong> e sincronizados via Firebase
+            (se configurado em <code>js/cloud-sync.js</code>).
+            Veja o status no canto superior direito da tela.
           </div>
         </div>
 
@@ -455,6 +457,7 @@
 
   <!-- Scripts -->
   <script src="js/db.js"></script>
+  <script src="js/cloud-sync.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/seed.js"></script>
   <script src="js/admin.js"></script>
