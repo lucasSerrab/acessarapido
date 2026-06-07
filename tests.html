@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Esteira de Testes — AcessaRápido</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .tests-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+    .tests-hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .tests-hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--gray-950);
+      margin-bottom: 12px;
+    }
+    .tests-hero p {
+      color: var(--gray-600);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .tests-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 700px) { .tests-summary { grid-template-columns: repeat(2, 1fr); } }
+
+    .tests-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      justify-content: center;
+    }
+
+    .test-section {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--r-lg);
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .test-section__head {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--gray-100);
+      background: var(--gray-50);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray-900);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .test-section__head i { color: var(--brand-600); }
+
+    .test-row {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 14px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--gray-100);
+      align-items: center;
+    }
+    .test-row:last-child { border-bottom: none; }
+
+    .test-status {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .test-status.pending  { background: var(--gray-100); color: var(--gray-500); }
+    .test-status.running  { background: var(--brand-50); color: var(--brand-700); }
+    .test-status.passed   { background: #d1fae5;          color: #065f46;          }
+    .test-status.failed   { background: #fee2e2;          color: #991b1b;          }
+
+    .test-info strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 2px;
+    }
+    .test-info span {
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+    .test-info code {
+      font-family: var(--font-mono);
+      background: var(--gray-50);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: var(--danger);
+    }
+
+    .test-action {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-500);
+      font-family: var(--font-mono);
+      min-width: 80px;
+      text-align: right;
+    }
+    .test-action.passed { color: var(--success); }
+    .test-action.failed { color: var(--danger); }
+  </style>
+</head>
+<body style="background: var(--gray-50);">
+
+  <div class="tests-container">
+
+    <div class="tests-hero">
+      <h1>
+        <i class="fas fa-vial" style="color: var(--brand-600); margin-right: 10px"></i>
+        Esteira de Testes
+      </h1>
+      <p>Roda os testes automáticos e mostra o status de cada parte do sistema. Use isso antes de cada deploy.</p>
+    </div>
+
+    <!-- Resumo -->
+    <div class="tests-summary">
+      <div class="summary-card">
+        <div class="summary-card__label">Total</div>
+        <div class="summary-card__value" id="sum-total">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Passou</div>
+        <div class="summary-card__value success" id="sum-passed">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Falhou</div>
+        <div class="summary-card__value danger" id="sum-failed">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card__label">Duração</div>
+        <div class="summary-card__value" id="sum-duration" style="font-size: 22px">—</div>
+      </div>
+    </div>
+
+    <div class="tests-actions">
+      <button class="btn btn--primary btn--lg" id="btn-run-all">
+        <i class="fas fa-play"></i> Rodar todos os testes
+      </button>
+      <button class="btn btn--secondary" id="btn-reset-db">
+        <i class="fas fa-database"></i> Resetar banco (limpa testes)
+      </button>
+      <a class="btn btn--ghost" href="index.html">
+        <i class="fas fa-arrow-left"></i> Voltar à landing
+      </a>
+    </div>
+
+    <!-- Suites -->
+    <div id="suites"></div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/card.js"></script>
+  <script src="js/tests.js"></script>
+</body>
+</html>

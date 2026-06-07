@@ -421,83 +421,43 @@ body {
   letter-spacing: 0.4px;
 }
 
-/* Mockup */
+/* Hero showcase com cards reais */
 .hero__mockup {
   position: relative;
-  height: 540px;
+  min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.mockup-phone {
-  width: 280px;
-  height: 540px;
-  background: #18181b;
-  border-radius: 42px;
-  padding: 8px;
-  box-shadow: var(--shadow-xl), 0 0 0 8px rgba(255, 255, 255, 0.6);
-  position: relative;
-  z-index: 2;
-  animation: floaty 6s ease-in-out infinite;
+.hero__cards-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(-12px); }
-}
-.mockup-phone::before {
+.hero__cards-deco::before, .hero__cards-deco::after {
   content: '';
   position: absolute;
-  top: 14px; left: 50%;
-  transform: translateX(-50%);
-  width: 90px; height: 22px;
-  background: #18181b;
-  border-radius: 12px;
-  z-index: 3;
+  border-radius: 14px;
+  box-shadow: 0 24px 48px -16px rgba(15, 23, 42, 0.2);
 }
-.mockup-screen {
-  width: 100%; height: 100%;
-  border-radius: 34px;
-  background: linear-gradient(180deg, var(--brand-50) 0%, #fff 100%);
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px 16px 16px;
-  gap: 14px;
-}
-.mockup-screen__title {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--gray-500);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  margin-bottom: 4px;
-}
-.mockup-card-deco {
-  position: absolute;
-  width: 240px;
-  height: 152px;
-  border-radius: 16px;
+.hero__cards-deco::before {
+  width: 200px; height: 320px;
   background: linear-gradient(135deg, var(--brand-700), var(--brand-950));
-  box-shadow: var(--shadow-xl);
-  z-index: 1;
-}
-.mockup-card-deco--1 {
-  top: 80px; left: -20px;
-  transform: rotate(-12deg);
+  top: 30px; left: 10%;
+  transform: rotate(-10deg);
   animation: deco-float-1 8s ease-in-out infinite;
 }
-.mockup-card-deco--2 {
-  bottom: 40px; right: -30px;
-  transform: rotate(8deg);
+.hero__cards-deco::after {
+  width: 180px; height: 280px;
   background: linear-gradient(135deg, #fff, var(--gray-100));
   border: 1px solid var(--gray-200);
+  bottom: 30px; right: 5%;
+  transform: rotate(8deg);
   animation: deco-float-2 7s ease-in-out infinite;
 }
 @keyframes deco-float-1 {
-  0%, 100% { transform: rotate(-12deg) translateY(0); }
-  50%       { transform: rotate(-10deg) translateY(-8px); }
+  0%, 100% { transform: rotate(-10deg) translateY(0); }
+  50%       { transform: rotate(-8deg) translateY(-8px); }
 }
 @keyframes deco-float-2 {
   0%, 100% { transform: rotate(8deg) translateY(0); }
@@ -507,8 +467,10 @@ body {
 @media (max-width: 900px) {
   .hero { padding: 50px 0 30px; }
   .hero__grid { grid-template-columns: 1fr; gap: 40px; }
-  .hero__mockup { height: 460px; }
-  .mockup-phone { width: 240px; height: 460px; }
+  .hero__mockup { min-height: 480px; }
+  .cards-stack { max-width: 240px; }
+  .hero__cards-deco::before { width: 160px; height: 260px; left: 5%; }
+  .hero__cards-deco::after  { width: 140px; height: 230px; right: 5%; }
 }
 
 /* Sections genéricas */
@@ -1097,156 +1059,190 @@ body {
 
 
 /* ╔══════════════════════════════════════════════════╗
-   ║       9. CARTEIRINHA (cartão real)                ║
+   ║       9. CARTEIRINHA — Crachá oficial institucional ║
    ╚══════════════════════════════════════════════════╝ */
 
 .id-card-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 24px;
   padding: 24px 0;
 }
 .id-scene {
-  perspective: 1200px;
+  perspective: 1400px;
   width: 100%;
-  max-width: 420px;
-  aspect-ratio: 1.586 / 1; /* ISO 7810 ID-1 */
+  max-width: 380px;
+  aspect-ratio: 0.63 / 1; /* formato vertical de crachá institucional */
 }
 .id-card {
   position: relative;
   width: 100%; height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
+  cursor: pointer;
 }
 .id-card.flipped { transform: rotateY(180deg); }
 
 .id-face {
   position: absolute;
   inset: 0;
-  border-radius: 18px;
+  border-radius: 14px;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
-  box-shadow: 0 32px 60px -16px rgba(15, 23, 42, 0.45),
-              0 8px 24px -8px rgba(15, 23, 42, 0.3);
+  box-shadow:
+    0 30px 60px -18px rgba(15, 23, 42, 0.35),
+    0 8px 20px -6px rgba(15, 23, 42, 0.2),
+    0 0 0 1px rgba(15, 23, 42, 0.04);
 }
 .id-face--back { transform: rotateY(180deg); }
 
-/* ─── FRENTE ─── */
+/* ═══ FRENTE ═══ */
 .id-face--front {
-  background: linear-gradient(135deg, #f7faff 0%, #eaf1fb 100%);
+  background: #fff;
   display: flex;
   flex-direction: column;
   position: relative;
 }
-.id-face--front::before {
+
+/* Faixa superior institucional */
+.id-front__banner {
+  background: var(--card-banner);
+  color: #fff;
+  padding: 16px 18px 14px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+/* Padrão de segurança sutil */
+.id-front__banner::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(45deg,
-      transparent 0, transparent 14px,
-      rgba(11, 31, 63, 0.025) 14px, rgba(11, 31, 63, 0.025) 15px),
-    radial-gradient(circle at 90% 90%, rgba(79, 70, 229, 0.08), transparent 40%);
+    radial-gradient(circle at 80% 50%, rgba(255,255,255,0.08), transparent 50%),
+    repeating-linear-gradient(135deg,
+      transparent 0, transparent 8px,
+      rgba(255,255,255,0.025) 8px, rgba(255,255,255,0.025) 9px);
   pointer-events: none;
 }
-
-.id-front__brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 18px;
-  background: var(--card-banner);
-  color: #fff;
-  position: relative;
-  z-index: 2;
-}
 .id-front__logo {
-  width: 30px; height: 30px;
-  border-radius: 8px;
-  background: var(--card-logo);
-  color: #fff;
+  width: 42px; height: 42px;
+  border-radius: 10px;
+  background: #fff;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 800;
-  font-size: 13px;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-.id-front__inst-info { line-height: 1.15; min-width: 0; flex: 1; }
-.id-front__inst-info strong {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.4px;
-}
-.id-front__inst-info span {
-  display: block;
-  font-size: 9px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
+  position: relative;
+  z-index: 1;
   overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: 1px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(0,0,0,0.05);
 }
-.id-front__type-tag {
+.id-front__logo img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+.id-front__logo-letter {
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--card-logo);
+  letter-spacing: -0.5px;
+}
+.id-front__inst {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+.id-front__inst-abbr {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+.id-front__inst-full {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.2px;
+  line-height: 1.2;
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Faixa "IDENTIFICAÇÃO ESTUDANTIL" */
+.id-front__doctype {
+  background: linear-gradient(180deg,
+    rgba(0,0,0,0.06) 0%,
+    transparent 100%);
+  padding: 6px 18px;
   font-size: 9px;
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.18);
   font-weight: 700;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  color: var(--card-banner);
+  text-align: center;
+  border-bottom: 1px solid var(--gray-100);
   flex-shrink: 0;
 }
 
-.id-front__body {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 14px;
-  padding: 14px 18px;
+/* Foto + dados principais */
+.id-front__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 18px 14px;
+  gap: 12px;
+  flex-shrink: 0;
   position: relative;
-  z-index: 2;
 }
 .id-front__photo {
-  width: 90px; height: 110px;
+  width: 110px;
+  height: 138px;
   border-radius: 8px;
-  background: #fff;
-  border: 2px solid #fff;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  background: var(--gray-100);
   overflow: hidden;
-  position: relative;
   flex-shrink: 0;
+  border: 3px solid #fff;
+  box-shadow:
+    0 6px 18px rgba(15, 23, 42, 0.18),
+    0 0 0 1px var(--gray-200);
+  position: relative;
 }
 .id-front__photo img {
   width: 100%; height: 100%;
   object-fit: cover;
+  display: block;
 }
 .id-front__photo-ph {
   width: 100%; height: 100%;
-  background: linear-gradient(135deg, var(--card-logo), var(--card-banner));
+  background: linear-gradient(135deg, var(--card-logo) 0%, var(--card-banner) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 36px;
+  font-size: 48px;
   font-weight: 800;
+  letter-spacing: -1px;
 }
-.id-front__data {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
+.id-front__name-wrap {
+  text-align: center;
+  width: 100%;
 }
 .id-front__name {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 800;
   color: var(--gray-950);
-  letter-spacing: -0.2px;
-  line-height: 1.2;
-  margin-bottom: 3px;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  margin-bottom: 4px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -1254,24 +1250,32 @@ body {
 }
 .id-front__course {
   font-size: 11px;
-  color: var(--gray-700);
-  font-weight: 500;
-  margin-bottom: 10px;
-  white-space: nowrap;
+  color: var(--gray-600);
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
+
+/* Grid de dados oficiais */
 .id-front__fields {
+  margin: 0 18px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px 12px;
+  gap: 10px 14px;
+  padding: 12px 14px;
+  background: var(--gray-50);
+  border-radius: 10px;
+  border: 1px solid var(--gray-100);
 }
-.id-field { display: flex; flex-direction: column; gap: 1px; }
+.id-field { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
 .id-field__label {
   font-size: 7.5px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.8px;
   color: var(--gray-500);
 }
 .id-field__value {
@@ -1285,43 +1289,71 @@ body {
   text-overflow: ellipsis;
 }
 
+/* Rodapé com selo + tipo */
 .id-front__footer {
-  height: 30px;
-  background: var(--card-accent);
+  margin-top: auto;
+  padding: 12px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 14px;
+  background: var(--card-accent);
+  border-top: 1px solid rgba(0,0,0,0.04);
   position: relative;
-  z-index: 2;
 }
-.id-front__chip {
-  width: 28px; height: 20px;
-  border-radius: 4px;
-  background: linear-gradient(135deg, #fef3c7, #fcd34d, #f59e0b);
+.id-front__seal {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.4), transparent 50%),
+    var(--card-banner);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   position: relative;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.12);
 }
-.id-front__chip::before, .id-front__chip::after {
+.id-front__seal::before {
   content: '';
   position: absolute;
-  background: rgba(0,0,0,0.15);
-  left: 0; right: 0; height: 1px;
+  inset: 4px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255,255,255,0.4);
 }
-.id-front__chip::before { top: 5px;  }
-.id-front__chip::after  { top: 12px; }
-.id-front__validity {
-  font-size: 9px;
-  font-weight: 700;
+.id-front__seal i {
+  color: #fff;
+  font-size: 14px;
+  position: relative;
+}
+.id-front__type-info {
+  flex: 1;
+  text-align: right;
+  padding-left: 10px;
+  min-width: 0;
+}
+.id-front__type-info strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
   color: var(--card-banner);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.id-front__validity strong { font-family: var(--font-mono); margin-left: 4px; }
+.id-front__type-info span {
+  font-size: 9px;
+  color: var(--gray-600);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  margin-top: 1px;
+  display: block;
+}
 
-
-/* ─── VERSO ─── */
+/* ═══ VERSO ═══ */
 .id-face--back {
-  background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+  background: linear-gradient(160deg, #1e1b4b 0%, #0a0a1f 100%);
   display: flex;
   flex-direction: column;
   color: #fff;
@@ -1330,60 +1362,109 @@ body {
 .id-face--back::before {
   content: '';
   position: absolute;
-  top: 38px; left: 0; right: 0;
-  height: 38px;
-  background: #000;
-  z-index: 1;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(99, 102, 241, 0.2), transparent 50%),
+    radial-gradient(circle at 80% 90%, rgba(250, 204, 21, 0.08), transparent 50%);
+  pointer-events: none;
 }
+
 .id-back__topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
-  font-size: 11px;
-  font-weight: 600;
+  padding: 14px 18px 12px;
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
-.id-back__topbar__inst { letter-spacing: 0.4px; color: rgba(255,255,255,0.85); }
+.id-back__topbar__brand {
+  display: flex; align-items: center; gap: 10px;
+}
+.id-back__topbar__logo {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.95);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.id-back__topbar__logo img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  padding: 3px;
+}
+.id-back__topbar__logo-letter {
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--card-banner);
+}
+.id-back__topbar__inst {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
 .id-back__topbar__chip {
-  font-size: 9px;
-  padding: 2px 8px;
+  font-size: 8.5px;
+  padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.12);
-  letter-spacing: 0.4px;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6ee7b7;
+  letter-spacing: 0.5px;
+  font-weight: 700;
 }
 
-.id-back__main {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  gap: 14px;
-  padding: 14px 16px 10px;
+/* QR centro de palco */
+.id-back__qr-wrap {
+  padding: 22px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
-  z-index: 2;
-  margin-top: 28px;
+  z-index: 1;
 }
 .id-back__qr {
-  width: 130px; height: 130px;
+  width: 168px; height: 168px;
   background: #fff;
-  border-radius: 10px;
-  padding: 6px;
+  border-radius: 14px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
   position: relative;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.1);
 }
 .id-back__qr canvas, .id-back__qr img {
-  width: 118px !important; height: 118px !important;
+  width: 148px !important; height: 148px !important;
   display: block;
+}
+/* "Hologram" overlay */
+.id-back__qr::before {
+  content: '';
+  position: absolute;
+  top: -1px; right: -1px;
+  width: 18px; height: 18px;
+  border-top: 2px solid var(--accent-400);
+  border-right: 2px solid var(--accent-400);
+  border-top-right-radius: 14px;
+  pointer-events: none;
+}
+.id-back__qr::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: -1px;
+  width: 18px; height: 18px;
+  border-bottom: 2px solid var(--accent-400);
+  border-left: 2px solid var(--accent-400);
+  border-bottom-left-radius: 14px;
+  pointer-events: none;
 }
 .id-back__qr-overlay {
   position: absolute;
-  inset: 6px;
-  background: rgba(255,255,255,0.95);
+  inset: 10px;
+  background: rgba(255,255,255,0.97);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -1394,33 +1475,49 @@ body {
 }
 .id-back__qr-overlay.active { opacity: 1; }
 .id-back__qr-overlay i {
-  font-size: 22px;
+  font-size: 28px;
   color: var(--brand-700);
   animation: spin 1s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.id-back__info {
+.id-back__qr-caption {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Timer + dados oficiais */
+.id-back__bottom {
+  padding: 0 18px 16px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 0;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
 }
+
 .id-back__timer {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 8px;
+  gap: 10px;
+  padding: 9px 12px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 10px;
   transition: background 0.3s, border-color 0.3s;
 }
-.id-back__timer.warning { background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.3); }
-.id-back__timer.danger  { background: rgba(239, 68,  68, 0.12); border-color: rgba(239, 68,  68, 0.3); }
-.id-back__timer-ring { width: 28px; height: 28px; position: relative; flex-shrink: 0; }
-.id-back__timer-ring svg { width: 28px; height: 28px; transform: rotate(-90deg); }
-.id-back__timer-ring .track { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 3; }
+.id-back__timer.warning { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); }
+.id-back__timer.danger  { background: rgba(239, 68,  68, 0.1); border-color: rgba(239, 68,  68, 0.3); }
+
+.id-back__timer-ring { width: 32px; height: 32px; position: relative; flex-shrink: 0; }
+.id-back__timer-ring svg { width: 32px; height: 32px; transform: rotate(-90deg); }
+.id-back__timer-ring .track { fill: none; stroke: rgba(255,255,255,0.12); stroke-width: 3; }
 .id-back__timer-ring .fill {
   fill: none;
   stroke: var(--success);
@@ -1437,73 +1534,38 @@ body {
   align-items: center;
   justify-content: center;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #fff;
 }
 .id-back__timer-text {
   flex: 1;
-  font-size: 9px;
+  font-size: 10px;
   line-height: 1.2;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.78);
 }
 .id-back__timer-text strong {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: #fff;
+  margin-bottom: 2px;
 }
 
-.id-back__list {
-  margin-top: 2px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.id-back__list-row {
+.id-back__id-strip {
   display: flex;
   justify-content: space-between;
-  font-size: 9px;
-  line-height: 1.4;
-  border-bottom: 1px dashed rgba(255,255,255,0.08);
-  padding: 1px 0;
-}
-.id-back__list-row span:first-child {
-  color: rgba(255,255,255,0.5);
-  font-weight: 500;
-}
-.id-back__list-row span:last-child {
-  color: rgba(255,255,255,0.95);
-  font-weight: 600;
+  align-items: center;
+  font-size: 9.5px;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.6px;
   font-family: var(--font-mono);
-  text-align: right;
-  max-width: 65%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255,255,255,0.08);
 }
-
-.id-back__barcode {
-  margin: 4px 16px 4px;
-  height: 18px;
-  background:
-    repeating-linear-gradient(90deg,
-      #fff 0, #fff 1px, transparent 1px, transparent 3px,
-      #fff 3px, #fff 5px, transparent 5px, transparent 7px,
-      #fff 7px, #fff 8px, transparent 8px, transparent 9px);
-  border-radius: 2px;
-  position: relative;
-  z-index: 2;
-}
-.id-back__barcode-text {
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 8px;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 2px;
-  margin-bottom: 6px;
-  position: relative;
-  z-index: 2;
+.id-back__id-strip strong {
+  font-weight: 700;
+  color: rgba(255,255,255,0.85);
 }
 
 .id-card-actions {
@@ -1524,6 +1586,57 @@ body {
   border-radius: 999px;
 }
 .id-card-info i { color: var(--success); }
+
+/* Carrossel da landing (preview multi-cards) */
+.cards-stack {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 0.63 / 1;
+  margin: 0 auto;
+}
+.cards-stack .id-scene {
+  position: absolute;
+  inset: 0;
+  max-width: none;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.7s, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cards-stack .id-scene[data-state="prev"] {
+  opacity: 0;
+  transform: translateX(-30%) scale(0.85) rotate(-6deg);
+  z-index: 1;
+}
+.cards-stack .id-scene[data-state="active"] {
+  opacity: 1;
+  transform: translateX(0) scale(1) rotate(0deg);
+  z-index: 3;
+}
+.cards-stack .id-scene[data-state="next"] {
+  opacity: 0.5;
+  transform: translateX(30%) scale(0.85) rotate(6deg);
+  z-index: 2;
+  pointer-events: none;
+}
+.cards-stack .id-card { cursor: default; }
+
+.cards-stack-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 18px;
+}
+.cards-stack-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gray-300);
+  transition: background 0.2s, width 0.2s;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+.cards-stack-dot.active { background: var(--brand-600); width: 22px; border-radius: 4px; }
 
 
 /* ╔══════════════════════════════════════════════════╗

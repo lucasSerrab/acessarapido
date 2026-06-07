@@ -90,51 +90,63 @@
 
               <!-- ─── FRENTE ─── -->
               <div class="id-face id-face--front">
-                <!-- Brand bar -->
-                <div class="id-front__brand">
-                  <div class="id-front__logo" id="cf-logo">U</div>
-                  <div class="id-front__inst-info">
-                    <strong id="cf-inst-abbr">UNICID</strong>
-                    <span  id="cf-inst-full">Universidade Cidade de S. Paulo</span>
+                <!-- Faixa institucional -->
+                <div class="id-front__banner">
+                  <div class="id-front__logo">
+                    <img id="cf-logo-img" src="" alt="" style="display:none" />
+                    <span class="id-front__logo-letter" id="cf-logo-letter">U</span>
                   </div>
-                  <div class="id-front__type-tag" id="cf-type-tag">EAD</div>
+                  <div class="id-front__inst">
+                    <div class="id-front__inst-abbr"  id="cf-inst-abbr">—</div>
+                    <div class="id-front__inst-full"  id="cf-inst-full">—</div>
+                  </div>
                 </div>
 
-                <!-- Body -->
-                <div class="id-front__body">
+                <!-- Tipo de documento -->
+                <div class="id-front__doctype" id="cf-doctype">
+                  Identificação Estudantil
+                </div>
+
+                <!-- Foto e dados -->
+                <div class="id-front__hero">
                   <div class="id-front__photo">
                     <img id="cf-photo" src="" alt="Foto" style="display:none" />
                     <div class="id-front__photo-ph" id="cf-photo-ph">L</div>
                   </div>
-                  <div class="id-front__data">
-                    <div class="id-front__name" id="cf-name">—</div>
+                  <div class="id-front__name-wrap">
+                    <div class="id-front__name"   id="cf-name">—</div>
                     <div class="id-front__course" id="cf-course">—</div>
-                    <div class="id-front__fields">
-                      <div class="id-field">
-                        <span class="id-field__label" id="cf-id-label">RGM</span>
-                        <span class="id-field__value" id="cf-id-value">—</span>
-                      </div>
-                      <div class="id-field">
-                        <span class="id-field__label">Validade</span>
-                        <span class="id-field__value" id="cf-validity">—</span>
-                      </div>
-                      <div class="id-field">
-                        <span class="id-field__label">Nasc.</span>
-                        <span class="id-field__value" id="cf-birth">—</span>
-                      </div>
-                      <div class="id-field">
-                        <span class="id-field__label">Sangue</span>
-                        <span class="id-field__value" id="cf-blood">—</span>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
-                <!-- Footer com chip -->
+                <!-- Dados oficiais -->
+                <div class="id-front__fields">
+                  <div class="id-field">
+                    <span class="id-field__label" id="cf-id-label">RGM</span>
+                    <span class="id-field__value" id="cf-id-value">—</span>
+                  </div>
+                  <div class="id-field">
+                    <span class="id-field__label">Validade</span>
+                    <span class="id-field__value" id="cf-validity">—</span>
+                  </div>
+                  <div class="id-field">
+                    <span class="id-field__label">Nascimento</span>
+                    <span class="id-field__value" id="cf-birth">—</span>
+                  </div>
+                  <div class="id-field">
+                    <span class="id-field__label">Sangue</span>
+                    <span class="id-field__value" id="cf-blood">—</span>
+                  </div>
+                </div>
+
+                <!-- Rodapé com selo -->
                 <div class="id-front__footer">
-                  <div class="id-front__chip"></div>
-                  <div class="id-front__validity">
-                    <span id="cf-banner">GRADUAÇÃO EAD</span>
+                  <div class="id-front__seal">
+                    <i class="fas fa-shield-halved"></i>
+                  </div>
+                  <div class="id-front__type-info">
+                    <strong id="cf-banner">GRADUAÇÃO EAD</strong>
+                    <span id="cf-semester">—</span>
                   </div>
                 </div>
               </div>
@@ -143,44 +155,52 @@
               <!-- ─── VERSO ─── -->
               <div class="id-face id-face--back">
                 <div class="id-back__topbar">
-                  <span class="id-back__topbar__inst" id="cb-inst">UNICID</span>
-                  <span class="id-back__topbar__chip">DOC. OFICIAL</span>
+                  <div class="id-back__topbar__brand">
+                    <div class="id-back__topbar__logo">
+                      <img id="cb-logo-img" src="" alt="" style="display:none" />
+                      <span class="id-back__topbar__logo-letter" id="cb-logo-letter">U</span>
+                    </div>
+                    <span class="id-back__topbar__inst" id="cb-inst">UNICID</span>
+                  </div>
+                  <span class="id-back__topbar__chip">
+                    <i class="fas fa-lock" style="font-size:7px; margin-right:3px"></i>
+                    DOCUMENTO OFICIAL
+                  </span>
                 </div>
 
-                <div class="id-back__main">
+                <div class="id-back__qr-wrap">
                   <div class="id-back__qr">
                     <div id="qrcode-canvas"></div>
                     <div class="id-back__qr-overlay" id="qr-overlay">
                       <i class="fas fa-arrows-rotate"></i>
                     </div>
                   </div>
-
-                  <div class="id-back__info">
-                    <div class="id-back__timer" id="cb-timer">
-                      <div class="id-back__timer-ring">
-                        <svg viewBox="0 0 28 28">
-                          <circle class="track" cx="14" cy="14" r="10" />
-                          <circle class="fill"  cx="14" cy="14" r="10"
-                                  stroke-dasharray="62.83" stroke-dashoffset="0" id="cb-ring-fill" />
-                        </svg>
-                        <span class="id-back__timer-ring__count" id="cb-ring-count">15</span>
-                      </div>
-                      <div class="id-back__timer-text">
-                        <strong>QR válido</strong>
-                        Renova a cada 15s
-                      </div>
-                    </div>
-
-                    <div class="id-back__list">
-                      <div class="id-back__list-row"><span>RG</span>          <span id="cb-rg">—</span></div>
-                      <div class="id-back__list-row"><span>Semestre</span>    <span id="cb-sem">—</span></div>
-                      <div class="id-back__list-row"><span>Emergência</span>  <span id="cb-emerg">—</span></div>
-                    </div>
+                  <div class="id-back__qr-caption">
+                    Apresente na catraca para validação
                   </div>
                 </div>
 
-                <div class="id-back__barcode"></div>
-                <div class="id-back__barcode-text" id="cb-barcode-text">0000 0000 0000 0000</div>
+                <div class="id-back__bottom">
+                  <div class="id-back__timer" id="cb-timer">
+                    <div class="id-back__timer-ring">
+                      <svg viewBox="0 0 32 32">
+                        <circle class="track" cx="16" cy="16" r="12" />
+                        <circle class="fill"  cx="16" cy="16" r="12"
+                                stroke-dasharray="75.4" stroke-dashoffset="0" id="cb-ring-fill" />
+                      </svg>
+                      <span class="id-back__timer-ring__count" id="cb-ring-count">15</span>
+                    </div>
+                    <div class="id-back__timer-text">
+                      <strong>QR válido por <span id="cb-secs">15</span>s</strong>
+                      Token rotativo de segurança
+                    </div>
+                  </div>
+
+                  <div class="id-back__id-strip">
+                    <span>ID: <strong id="cb-id-num">—</strong></span>
+                    <span id="cb-emerg-short">SOS —</span>
+                  </div>
+                </div>
               </div>
               <!-- /verso -->
 

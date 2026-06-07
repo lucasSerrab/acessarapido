@@ -31,9 +31,9 @@
         <i class="nav-item__icon fas fa-users"></i>
         <span>Usuários</span>
       </button>
-      <button class="nav-item" data-tab="institution">
+      <button class="nav-item" data-tab="institutions">
         <i class="nav-item__icon fas fa-university"></i>
-        <span>Instituição</span>
+        <span>Instituições</span>
       </button>
       <button class="nav-item" data-tab="advanced">
         <i class="nav-item__icon fas fa-sliders"></i>
@@ -67,7 +67,7 @@
 
     <div class="app-content">
 
-      <!-- ═══════ ABA: CARTEIRINHAS (Students) ═══════ -->
+      <!-- ═══════ ABA: CARTEIRINHAS ═══════ -->
       <section class="admin-tab-content active" id="tab-students">
         <div class="page-header">
           <div>
@@ -79,13 +79,25 @@
           </button>
         </div>
 
+        <div class="materials-toolbar">
+          <div class="input-wrap">
+            <i class="fas fa-search input-wrap__icon"></i>
+            <input class="input input--icon" id="students-search" type="text" placeholder="Buscar por nome, curso ou matrícula..." />
+          </div>
+          <select class="select" id="students-filter-inst" style="max-width: 240px">
+            <option value="">Todas as instituições</option>
+          </select>
+        </div>
+
         <div class="users-table-wrap">
           <table class="users-table">
             <thead>
               <tr>
+                <th></th>
                 <th>Nome</th>
                 <th>Tipo</th>
                 <th>Curso / Cargo</th>
+                <th>Instituição</th>
                 <th>ID</th>
                 <th>Validade</th>
                 <th style="text-align:right">Ações</th>
@@ -124,85 +136,32 @@
         </div>
       </section>
 
-      <!-- ═══════ ABA: INSTITUIÇÃO ═══════ -->
-      <section class="admin-tab-content" id="tab-institution">
+      <!-- ═══════ ABA: INSTITUIÇÕES ═══════ -->
+      <section class="admin-tab-content" id="tab-institutions">
         <div class="page-header">
           <div>
-            <h2>Dados da instituição</h2>
-            <p>Configure aparência, contatos e comunicados.</p>
+            <h2>Instituições</h2>
+            <p>Configure aparência, contatos e logos.</p>
           </div>
-          <button class="btn btn--primary" id="btn-save-inst">
-            <i class="fas fa-floppy-disk"></i> Salvar
+          <button class="btn btn--primary" id="btn-new-inst">
+            <i class="fas fa-plus"></i> Nova instituição
           </button>
         </div>
 
-        <div class="form-section">
-          <div class="form-section__head">
-            <i class="fas fa-pen"></i> Identidade visual
-          </div>
-          <div class="form-section__body">
-            <div class="form-grid">
-              <div class="field">
-                <label class="field__label" for="inst-form-abbr">Sigla</label>
-                <input class="input" id="inst-form-abbr" />
-              </div>
-              <div class="field">
-                <label class="field__label" for="inst-form-full">Nome completo</label>
-                <input class="input" id="inst-form-full" />
-              </div>
-              <div class="field">
-                <label class="field__label">Cor do logo</label>
-                <div class="color-row">
-                  <input type="color" id="inst-form-logocolor" />
-                  <span class="color-hex" id="hex-logocolor">#000000</span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="field__label">Cor do banner</label>
-                <div class="color-row">
-                  <input type="color" id="inst-form-bannercolor" />
-                  <span class="color-hex" id="hex-bannercolor">#000000</span>
-                </div>
-              </div>
-              <div class="field">
-                <label class="field__label">Cor de destaque</label>
-                <div class="color-row">
-                  <input type="color" id="inst-form-accentcolor" />
-                  <span class="color-hex" id="hex-accentcolor">#000000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section__head">
-            <i class="fas fa-phone"></i> Contato e localização
-          </div>
-          <div class="form-section__body">
-            <div class="form-grid">
-              <div class="field form-grid__full">
-                <label class="field__label" for="inst-form-address">Endereço</label>
-                <input class="input" id="inst-form-address" />
-              </div>
-              <div class="field">
-                <label class="field__label" for="inst-form-phone">Telefone</label>
-                <input class="input" id="inst-form-phone" />
-              </div>
-              <div class="field">
-                <label class="field__label" for="inst-form-email">E-mail</label>
-                <input class="input" id="inst-form-email" />
-              </div>
-              <div class="field">
-                <label class="field__label" for="inst-form-site">Site</label>
-                <input class="input" id="inst-form-site" />
-              </div>
-              <div class="field">
-                <label class="field__label" for="inst-form-hours">Horário</label>
-                <input class="input" id="inst-form-hours" />
-              </div>
-            </div>
-          </div>
+        <div class="users-table-wrap" style="margin-bottom: 20px">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Logo</th>
+                <th>Sigla</th>
+                <th>Nome</th>
+                <th>Cores</th>
+                <th>Cadastros</th>
+                <th style="text-align:right">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="institutions-tbody"></tbody>
+          </table>
         </div>
       </section>
 
@@ -244,6 +203,14 @@
               </div>
               <button class="btn btn--danger" id="btn-reset"><i class="fas fa-trash"></i> Resetar tudo</button>
             </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px">
+              <div>
+                <strong style="display:block; font-size:14px">Esteira de testes</strong>
+                <small style="color: var(--gray-600)">Página de testes manuais e automáticos.</small>
+              </div>
+              <a class="btn btn--secondary" href="tests.html"><i class="fas fa-vial"></i> Abrir testes</a>
+            </div>
           </div>
         </div>
       </section>
@@ -253,7 +220,7 @@
 
   <!-- ══════════ MODAL: Editar/Novo aluno ══════════ -->
   <div class="modal-overlay" id="modal-student">
-    <div class="modal">
+    <div class="modal" style="max-width: 560px">
       <div class="modal__head">
         <h3 id="modal-student-title">Nova carteirinha</h3>
         <button class="modal__close" data-close-modal="modal-student"><i class="fas fa-xmark"></i></button>
@@ -282,6 +249,10 @@
         </div>
 
         <div class="form-grid">
+          <div class="field form-grid__full">
+            <label class="field__label" for="student-institution">Instituição</label>
+            <select class="select" id="student-institution"></select>
+          </div>
           <div class="field">
             <label class="field__label" for="student-cardtype">Tipo</label>
             <select class="select" id="student-cardtype">
@@ -312,7 +283,7 @@
           </div>
           <div class="field">
             <label class="field__label" for="student-validity">Validade (MM/AAAA)</label>
-            <input class="input" id="student-validity" />
+            <input class="input" id="student-validity" placeholder="12/2026" />
           </div>
           <div class="field">
             <label class="field__label" for="student-birth">Nascimento</label>
@@ -333,7 +304,7 @@
             </select>
           </div>
           <div class="field">
-            <label class="field__label" for="student-semester">Semestre</label>
+            <label class="field__label" for="student-semester">Semestre / Ano</label>
             <input class="input" id="student-semester" />
           </div>
           <div class="field">
@@ -386,6 +357,94 @@
       <div class="modal__footer">
         <button class="btn btn--ghost" data-close-modal="modal-user">Cancelar</button>
         <button class="btn btn--primary" id="btn-save-user">
+          <i class="fas fa-floppy-disk"></i> Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ MODAL: Editar/Nova instituição ══════════ -->
+  <div class="modal-overlay" id="modal-inst">
+    <div class="modal" style="max-width: 560px">
+      <div class="modal__head">
+        <h3 id="modal-inst-title">Nova instituição</h3>
+        <button class="modal__close" data-close-modal="modal-inst"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="modal__body">
+        <input type="hidden" id="inst-id" />
+
+        <!-- Upload de LOGO -->
+        <div class="photo-uploader">
+          <div class="photo-uploader__preview" id="inst-logo-preview" style="width: 80px; height: 80px; border-radius: 14px">
+            <i class="fas fa-university"></i>
+          </div>
+          <div class="photo-uploader__actions">
+            <label class="btn btn--secondary" for="inst-logo-input">
+              <i class="fas fa-upload"></i> Enviar logo
+            </label>
+            <input type="file" id="inst-logo-input" accept="image/*,image/svg+xml" style="display:none" />
+            <button type="button" class="btn btn--ghost" id="inst-logo-remove" style="color: var(--danger)">
+              <i class="fas fa-trash"></i> Remover logo
+            </button>
+            <small style="color: var(--gray-500); font-size: 11px">PNG, JPG ou SVG. Máx 2MB.</small>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="inst-form-abbr">Sigla</label>
+            <input class="input" id="inst-form-abbr" placeholder="Ex.: UNICID" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="inst-form-full">Nome completo</label>
+            <input class="input" id="inst-form-full" placeholder="Ex.: Universidade Cidade de São Paulo" />
+          </div>
+          <div class="field">
+            <label class="field__label">Cor do logo</label>
+            <div class="color-row">
+              <input type="color" id="inst-form-logocolor" />
+              <span class="color-hex" id="hex-logocolor">#000000</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label">Cor do banner</label>
+            <div class="color-row">
+              <input type="color" id="inst-form-bannercolor" />
+              <span class="color-hex" id="hex-bannercolor">#000000</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field__label">Cor de destaque</label>
+            <div class="color-row">
+              <input type="color" id="inst-form-accentcolor" />
+              <span class="color-hex" id="hex-accentcolor">#000000</span>
+            </div>
+          </div>
+          <div class="field form-grid__full">
+            <label class="field__label" for="inst-form-address">Endereço</label>
+            <input class="input" id="inst-form-address" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="inst-form-phone">Telefone</label>
+            <input class="input" id="inst-form-phone" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="inst-form-email">E-mail</label>
+            <input class="input" id="inst-form-email" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="inst-form-site">Site</label>
+            <input class="input" id="inst-form-site" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="inst-form-hours">Horário</label>
+            <input class="input" id="inst-form-hours" />
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" data-close-modal="modal-inst">Cancelar</button>
+        <button class="btn btn--primary" id="btn-save-inst">
           <i class="fas fa-floppy-disk"></i> Salvar
         </button>
       </div>

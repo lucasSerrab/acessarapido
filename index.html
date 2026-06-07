@@ -69,61 +69,19 @@
             <span>Tipos de carteirinha</span>
           </div>
           <div class="hero__stat">
-            <strong>100%</strong>
-            <span>Mobile-ready</span>
+            <strong>∞</strong>
+            <span>Alunos por instituição</span>
           </div>
         </div>
       </div>
 
-      <!-- Mockup mobile -->
+      <!-- Showcase com carrossel de carteirinhas -->
       <div class="hero__mockup">
-        <div class="mockup-card-deco mockup-card-deco--1"></div>
-        <div class="mockup-card-deco mockup-card-deco--2"></div>
-
-        <div class="mockup-phone">
-          <div class="mockup-screen">
-            <div class="mockup-screen__title">Sua carteirinha</div>
-
-            <!-- Card real renderizado em escala -->
-            <div class="id-scene" style="max-width: 240px;">
-              <div class="id-card">
-                <div class="id-face id-face--front">
-                  <div class="id-front__brand" style="background:#0b1f3f">
-                    <div class="id-front__logo" style="background:#10b981">U</div>
-                    <div class="id-front__inst-info">
-                      <strong>UNICID</strong>
-                      <span>Universidade Cidade de S. Paulo</span>
-                    </div>
-                  </div>
-                  <div class="id-front__body">
-                    <div class="id-front__photo">
-                      <div class="id-front__photo-ph" style="background: linear-gradient(135deg, #10b981, #0b1f3f)">L</div>
-                    </div>
-                    <div class="id-front__data">
-                      <div class="id-front__name">Lucas Serra Barreto</div>
-                      <div class="id-front__course">Ciência da Computação</div>
-                      <div class="id-front__fields">
-                        <div class="id-field">
-                          <span class="id-field__label">RGM</span>
-                          <span class="id-field__value">04081939-6</span>
-                        </div>
-                        <div class="id-field">
-                          <span class="id-field__label">Validade</span>
-                          <span class="id-field__value">12/2026</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="id-front__footer" style="background:#dbeafe">
-                    <div class="id-front__chip"></div>
-                    <div class="id-front__validity">GRADUAÇÃO EAD</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /card -->
-          </div>
+        <div class="hero__cards-deco"></div>
+        <div class="cards-stack" id="cards-stack">
+          <!-- Cards são renderizados dinamicamente via JS -->
         </div>
+        <div class="cards-stack-dots" id="cards-stack-dots"></div>
       </div>
     </div>
   </section>
@@ -283,9 +241,7 @@
   <script src="js/db.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/seed.js"></script>
-  <script>
-    // Inicializa o banco com dados de demo na primeira visita
-    seedIfEmpty().catch(console.error);
-  </script>
+  <script src="js/card.js"></script>
+  <script src="js/landing.js"></script>
 </body>
 </html>
