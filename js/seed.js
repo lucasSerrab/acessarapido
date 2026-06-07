@@ -41,13 +41,22 @@ const PHOTO_LUCAS    = 'https://i.pravatar.cc/300?img=68';
 const PHOTO_MARIA    = 'https://i.pravatar.cc/300?img=47';
 const PHOTO_PEDRO    = 'https://i.pravatar.cc/300?img=12';
 const PHOTO_SOPHIA   = 'https://i.pravatar.cc/300?img=49';
-const PHOTO_ANA      = 'https://i.pravatar.cc/300?img=44';
+const PHOTO_RACHEL   = 'https://i.pravatar.cc/300?img=44';
 const PHOTO_RICARDO  = 'https://i.pravatar.cc/300?img=15';
 
 
+const SEED_VERSION = 2;
+
 async function seedIfEmpty() {
   const db = DB.load();
-  if (db.meta.seeded) return;
+  // Se já está na versão atual do seed, não faz nada.
+  if (db.meta.seedVersion === SEED_VERSION) return;
+
+  // Versão anterior detectada: limpa banco para reaplicar.
+  if (db.meta.seeded || (db.meta.seedVersion && db.meta.seedVersion < SEED_VERSION)) {
+    console.info('[AcessaRápido] Migrando banco para seed v' + SEED_VERSION + ' (reset automático)…');
+    DB.reset();
+  }
 
   // ═══════════════════════════════════════════════
   // 1. INSTITUIÇÕES (2)
@@ -164,9 +173,9 @@ async function seedIfEmpty() {
     address: 'Rio de Janeiro / RJ',
   });
 
-  const ana = DB.students.insert({
-    name: 'Profa. Ana Beatriz Mendes',
-    photo: PHOTO_ANA,
+  const rachel = DB.students.insert({
+    name: 'Profa. Rachel Soares',
+    photo: PHOTO_RACHEL,
     birthDate: '08/11/1982',
     idLabel: 'RE',
     idNumber: 'PRF-002841',
@@ -256,16 +265,15 @@ async function seedIfEmpty() {
   // ═══════════════════════════════════════════════
   // 5. USUÁRIOS
   // ═══════════════════════════════════════════════
-  await Auth.register({ login: 'aluno',     password: '1234',    role: 'aluno',     studentId: lucas.id   });
+  await Auth.register({ login: 'lucas',     password: '1234',    role: 'aluno',     studentId: lucas.id   });
   await Auth.register({ login: 'maria',     password: '1234',    role: 'aluno',     studentId: maria.id   });
-  await Auth.register({ login: 'pedro',     password: '1234',    role: 'aluno',     studentId: pedro.id   });
-  await Auth.register({ login: 'sophia',    password: '1234',    role: 'aluno',     studentId: sophia.id  });
-  await Auth.register({ login: 'professor', password: '1234',    role: 'professor', studentId: ana.id     });
+  await Auth.register({ login: 'rachel',    password: '1234',    role: 'professor', studentId: rachel.id  });
   await Auth.register({ login: 'admin',     password: 'admin123',role: 'admin',     studentId: null       });
 
-  // Marca como seedado
+  // Marca como seedado nessa versão
   const finalDb = DB.load();
   finalDb.meta.seeded = true;
+  finalDb.meta.seedVersion = SEED_VERSION;
   DB.save(finalDb);
 
   console.info('[AcessaRápido] Banco populado com dados de demonstração.');
@@ -275,5 +283,5 @@ window.seedIfEmpty = seedIfEmpty;
 window.SAMPLE_LOGOS = { UNICID: LOGO_UNICID, CSMN: LOGO_CSMN };
 window.SAMPLE_PHOTOS = {
   lucas: PHOTO_LUCAS, maria: PHOTO_MARIA, pedro: PHOTO_PEDRO,
-  sophia: PHOTO_SOPHIA, ana: PHOTO_ANA, ricardo: PHOTO_RICARDO,
+  sophia: PHOTO_SOPHIA, rachel: PHOTO_RACHEL, ricardo: PHOTO_RICARDO,
 };

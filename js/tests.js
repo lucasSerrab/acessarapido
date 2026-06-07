@@ -35,10 +35,10 @@ const TESTS = [
       },
       {
         title: 'Existem múltiplas carteirinhas',
-        why:   'Demo deve ter pelo menos 4 alunos (Lucas, Maria, Pedro/Sophia, professor).',
+        why:   'Demo deve ter pelo menos 3 carteirinhas (Lucas, Maria, Rachel).',
         run: () => {
           const students = DB.students.all();
-          assert(students.length >= 4, `Esperava ≥4 alunos, encontrou ${students.length}`);
+          assert(students.length >= 3, `Esperava ≥3 alunos, encontrou ${students.length}`);
         },
       },
       {
@@ -88,10 +88,10 @@ const TESTS = [
     icon: 'fa-lock',
     tests: [
       {
-        title: 'Login com credenciais válidas (aluno/1234)',
+        title: 'Login com credenciais válidas (lucas/1234)',
         why:   'Usuário de demo deve conseguir entrar.',
         run: async () => {
-          const u = await Auth.login('aluno', '1234');
+          const u = await Auth.login('lucas', '1234');
           assert(u && u.role === 'aluno', 'Login falhou ou role errado');
           Auth.logout();
         },
@@ -110,7 +110,7 @@ const TESTS = [
         why:   'Senha incorreta não pode autenticar.',
         run: async () => {
           let threw = false;
-          try { await Auth.login('aluno', 'senha-errada'); }
+          try { await Auth.login('lucas', 'senha-errada'); }
           catch { threw = true; }
           assert(threw, 'Login com senha errada NÃO falhou');
         },
@@ -119,8 +119,8 @@ const TESTS = [
         title: 'Senha é armazenada com hash + salt',
         why:   'Nunca armazenar senha em texto puro.',
         run: () => {
-          const user = DB.users.findByLogin('aluno');
-          assert(user, 'Usuário aluno não encontrado');
+          const user = DB.users.findByLogin('lucas');
+          assert(user, 'Usuário lucas não encontrado');
           assert(user.passHash && user.passHash.length === 64, 'passHash não parece SHA-256');
           assert(user.salt && user.salt.length > 0, 'Sem salt');
           assert(!user.password, 'Senha em texto encontrada!');
@@ -130,12 +130,11 @@ const TESTS = [
         title: 'changePassword atualiza hash',
         why:   'Trocar senha deve gerar novo hash.',
         run: async () => {
-          const before = DB.users.findByLogin('professor');
+          const before = DB.users.findByLogin('rachel');
           const oldHash = before.passHash;
           await Auth.changePassword(before.id, 'nova-temp-1234');
-          const after = DB.users.findByLogin('professor');
+          const after = DB.users.findByLogin('rachel');
           assert(after.passHash !== oldHash, 'Hash não mudou');
-          // Restaura senha original
           await Auth.changePassword(before.id, '1234');
         },
       },

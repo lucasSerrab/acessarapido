@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════
    AcessaRápido — card.js
-   Lógica da carteirinha digital (render, flip, QR rotativo)
+   Lógica da carteirinha digital (face única, QR rotativo no front)
    ═══════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -22,17 +22,15 @@ const Card = {
   qrInstance: null,
   lastWindow: -1,
   timerInterval: null,
-  flipped: false,
 
   init(student, institution) {
     this.student = student;
     this.institution = institution;
     this.applyColors();
     this.renderFront();
-    this.renderBack();
     this.initQR();
     this.startTimer();
-    this.bindFlip();
+    this.bindFullscreen();
   },
 
   applyColors() {
@@ -50,7 +48,6 @@ const Card = {
     const nameInitial = (s.name || '?').trim().charAt(0).toUpperCase();
     const instInitial = (i.abbr || '?').charAt(0).toUpperCase();
 
-    // Logo institucional (img ou letra)
     paintLogo('cf-logo-img', 'cf-logo-letter', i.logo, instInitial);
 
     setText('cf-inst-abbr', i.abbr || '—');
@@ -63,7 +60,6 @@ const Card = {
     setText('cf-id-value',  s.idNumber || '—');
     setText('cf-validity',  s.validity || '—');
     setText('cf-birth',     s.birthDate || '—');
-    setText('cf-blood',     s.bloodType || '—');
     setText('cf-banner',    ct.banner);
     setText('cf-semester',  s.semester || s.courseCode || ct.typeName);
 
@@ -81,21 +77,6 @@ const Card = {
         ph.textContent = nameInitial;
       }
     }
-  },
-
-  renderBack() {
-    const s = this.student;
-    const i = this.institution;
-    const instInitial = (i.abbr || '?').charAt(0).toUpperCase();
-
-    paintLogo('cb-logo-img', 'cb-logo-letter', i.logo, instInitial);
-
-    setText('cb-inst',    i.abbr || '—');
-    setText('cb-id-num',  s.idNumber || '—');
-
-    // Contato de emergência abreviado
-    const emerg = s.emergencyContact;
-    setText('cb-emerg-short', emerg ? 'SOS ' + emerg : 'SOS não informado');
   },
 
   // ─── QR Code ──────────────────────────────────────
@@ -118,8 +99,8 @@ const Card = {
     container.innerHTML = '';
     this.qrInstance = new QRCode(container, {
       text:         this.buildToken(),
-      width:        148,
-      height:       148,
+      width:        116,
+      height:       116,
       colorDark:    '#0a0a1f',
       colorLight:   '#ffffff',
       correctLevel: QRCode.CorrectLevel.H,
@@ -152,13 +133,13 @@ const Card = {
   },
 
   updateTimer() {
-    const ringFill  = document.getElementById('cb-ring-fill');
-    const ringCount = document.getElementById('cb-ring-count');
-    const timerBox  = document.getElementById('cb-timer');
-    const secsLbl   = document.getElementById('cb-secs');
+    const ringFill  = document.getElementById('cf-ring-fill');
+    const ringCount = document.getElementById('cf-ring-count');
+    const qrBlock   = document.getElementById('cf-qr-block');
+    const secsLbl   = document.getElementById('cf-secs');
     if (!ringFill || !ringCount) return;
 
-    const elapsed  = (Date.now() % 15000) / 1000;
+    const elapsed   = (Date.now() % 15000) / 1000;
     const remaining = 15 - elapsed;
     const fraction  = remaining / 15;
 
@@ -166,11 +147,10 @@ const Card = {
     const offset = CIRC * (1 - fraction);
     ringFill.style.strokeDashoffset = offset.toFixed(2);
 
-    // Cor / estado
-    if (timerBox) {
-      timerBox.classList.remove('warning', 'danger');
-      if (remaining <= 4)      timerBox.classList.add('danger');
-      else if (remaining <= 8) timerBox.classList.add('warning');
+    if (qrBlock) {
+      qrBlock.classList.remove('warning', 'danger');
+      if (remaining <= 4)      qrBlock.classList.add('danger');
+      else if (remaining <= 8) qrBlock.classList.add('warning');
     }
 
     const secs = Math.ceil(remaining);
@@ -182,39 +162,16 @@ const Card = {
     if (win !== this.lastWindow) this.refreshQR();
   },
 
-  // ─── Flip ─────────────────────────────────────────
-  bindFlip() {
-    const btn  = document.getElementById('btn-flip');
-    const card = document.getElementById('id-card');
-    if (!btn || !card) return;
-
-    btn.addEventListener('click', () => this.toggleFlip());
-
-    // Clique no próprio card também vira
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('a, button')) return;
-      this.toggleFlip();
-    });
-
-    // Fullscreen
+  // ─── Fullscreen ───────────────────────────────────
+  bindFullscreen() {
     const btnFull = document.getElementById('btn-fullscreen');
-    if (btnFull) {
-      btnFull.addEventListener('click', () => {
-        const scene = document.querySelector('.id-scene');
-        if (!scene) return;
-        if (document.fullscreenElement) document.exitFullscreen();
-        else scene.requestFullscreen?.();
-      });
-    }
-  },
-
-  toggleFlip() {
-    const card = document.getElementById('id-card');
-    const lbl  = document.getElementById('flip-label');
-    if (!card) return;
-    this.flipped = !this.flipped;
-    card.classList.toggle('flipped', this.flipped);
-    if (lbl) lbl.textContent = this.flipped ? 'Mostrar Frente' : 'Mostrar QR Code';
+    if (!btnFull) return;
+    btnFull.addEventListener('click', () => {
+      const scene = document.querySelector('.id-scene');
+      if (!scene) return;
+      if (document.fullscreenElement) document.exitFullscreen();
+      else scene.requestFullscreen?.();
+    });
   },
 };
 

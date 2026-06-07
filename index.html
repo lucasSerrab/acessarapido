@@ -35,8 +35,8 @@
 
   <!-- ══════════ HERO ══════════ -->
   <section class="hero">
-    <div class="container hero__grid">
-      <div class="hero__content">
+    <div class="container hero__inner">
+      <div class="hero__content hero__content--centered">
         <span class="hero__pretitle">
           <span class="dot"></span>
           Plataforma em desenvolvimento
@@ -50,7 +50,7 @@
         </p>
         <div class="hero__cta">
           <a href="login.html" class="btn btn--primary btn--lg">
-            <i class="fas fa-rocket"></i>
+            <i class="fas fa-arrow-right-to-bracket"></i>
             Acessar plataforma
           </a>
           <a href="#features" class="btn btn--secondary btn--lg">
@@ -59,7 +59,7 @@
           </a>
         </div>
 
-        <div class="hero__stats">
+        <div class="hero__stats hero__stats--centered">
           <div class="hero__stat">
             <strong>15s</strong>
             <span>Rotação de QR</span>
@@ -73,15 +73,6 @@
             <span>Alunos por instituição</span>
           </div>
         </div>
-      </div>
-
-      <!-- Showcase com carrossel de carteirinhas -->
-      <div class="hero__mockup">
-        <div class="hero__cards-deco"></div>
-        <div class="cards-stack" id="cards-stack">
-          <!-- Cards são renderizados dinamicamente via JS -->
-        </div>
-        <div class="cards-stack-dots" id="cards-stack-dots"></div>
       </div>
     </div>
   </section>
@@ -241,7 +232,5 @@
   <script src="js/db.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/seed.js"></script>
-  <script src="js/card.js"></script>
-  <script src="js/landing.js"></script>
 </body>
 </html>

@@ -214,7 +214,7 @@ function openStudentModal(id = null) {
   populateStudentInstitutionSelect();
 
   const allFields = ['student-id','student-name','student-course','student-idnumber','student-validity',
-                     'student-birth','student-rg','student-blood','student-semester','student-emerg'];
+                     'student-birth','student-rg','student-semester','student-emerg'];
 
   if (isEdit) {
     const s = DB.students.findById(id);
@@ -229,7 +229,6 @@ function openStudentModal(id = null) {
     document.getElementById('student-validity').value     = s.validity || '';
     document.getElementById('student-birth').value        = s.birthDate || '';
     document.getElementById('student-rg').value           = s.rg || '';
-    document.getElementById('student-blood').value        = s.bloodType || '';
     document.getElementById('student-semester').value     = s.semester || '';
     document.getElementById('student-emerg').value        = s.emergencyContact || '';
     _pendingPhoto = s.photo || null;
@@ -261,7 +260,6 @@ function saveStudent() {
     validity:         val('student-validity'),
     birthDate:        val('student-birth'),
     rg:               val('student-rg'),
-    bloodType:        val('student-blood'),
     semester:         val('student-semester'),
     emergencyContact: val('student-emerg'),
     photo:            _pendingPhoto,
