@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>AcessaRápido — App</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -173,9 +176,9 @@
           <!-- /card -->
 
           <div class="id-card-actions">
-            <button class="btn btn--secondary" id="btn-fullscreen">
-              <i class="fas fa-expand"></i>
-              Tela cheia
+            <button class="btn btn--primary btn--lg" id="btn-zoom-qr" type="button">
+              <i class="fas fa-magnifying-glass-plus"></i>
+              Ampliar para a catraca
             </button>
           </div>
         </div>
@@ -374,6 +377,35 @@
       <span>Perfil</span>
     </button>
   </nav>
+
+  <!-- ══════════ MODAL QR AMPLIADO ══════════ -->
+  <div class="qr-modal" id="qr-modal" aria-hidden="true">
+    <div class="qr-modal__backdrop" data-close-qr></div>
+    <div class="qr-modal__content">
+      <button class="qr-modal__close" id="btn-close-qr" type="button" aria-label="Fechar">
+        <i class="fas fa-xmark"></i>
+      </button>
+
+      <div class="qr-modal__header">
+        <div class="qr-modal__inst" id="qr-modal-inst">—</div>
+        <div class="qr-modal__name" id="qr-modal-name">—</div>
+      </div>
+
+      <div class="qr-modal__qr-wrap">
+        <div class="qr-modal__qr" id="qr-modal-qr"></div>
+        <div class="qr-modal__overlay" id="qr-modal-overlay">
+          <i class="fas fa-arrows-rotate"></i>
+        </div>
+      </div>
+
+      <div class="qr-modal__timer">
+        <span>QR válido por <strong id="qr-modal-secs">15</strong>s</span>
+        <span class="qr-modal__token-tag">Token rotativo · seguro</span>
+      </div>
+
+      <div class="qr-modal__id" id="qr-modal-id">—</div>
+    </div>
+  </div>
 
   <!-- Toast -->
   <div class="toast" id="toast" aria-live="polite"></div>

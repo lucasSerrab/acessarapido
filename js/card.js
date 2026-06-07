@@ -20,6 +20,7 @@ const Card = {
   student: null,
   institution: null,
   qrInstance: null,
+  qrModalInstance: null,
   lastWindow: -1,
   timerInterval: null,
 
@@ -29,8 +30,9 @@ const Card = {
     this.applyColors();
     this.renderFront();
     this.initQR();
+    this.initQRModal();
     this.startTimer();
-    this.bindFullscreen();
+    this.bindZoom();
   },
 
   applyColors() {
@@ -113,11 +115,19 @@ const Card = {
     this.lastWindow = this.currentWindow();
     const overlay = document.getElementById('qr-overlay');
     if (overlay) overlay.classList.add('active');
+    const modalOverlay = document.getElementById('qr-modal-overlay');
+    if (modalOverlay) modalOverlay.classList.add('active');
 
+    const newToken = this.buildToken();
     setTimeout(() => {
       this.qrInstance.clear();
-      this.qrInstance.makeCode(this.buildToken());
+      this.qrInstance.makeCode(newToken);
+      if (this.qrModalInstance) {
+        this.qrModalInstance.clear();
+        this.qrModalInstance.makeCode(newToken);
+      }
       if (overlay) overlay.classList.remove('active');
+      if (modalOverlay) modalOverlay.classList.remove('active');
     }, 280);
   },
 
@@ -156,21 +166,56 @@ const Card = {
     const secs = Math.ceil(remaining);
     ringCount.textContent = secs;
     if (secsLbl) secsLbl.textContent = secs;
+    const modalSecs = document.getElementById('qr-modal-secs');
+    if (modalSecs) modalSecs.textContent = secs;
 
     // Atualiza QR ao trocar janela
     const win = this.currentWindow();
     if (win !== this.lastWindow) this.refreshQR();
   },
 
-  // ─── Fullscreen ───────────────────────────────────
-  bindFullscreen() {
-    const btnFull = document.getElementById('btn-fullscreen');
-    if (!btnFull) return;
-    btnFull.addEventListener('click', () => {
-      const scene = document.querySelector('.id-scene');
-      if (!scene) return;
-      if (document.fullscreenElement) document.exitFullscreen();
-      else scene.requestFullscreen?.();
+  // ─── QR Modal (Visão catraca) ─────────────────────
+  initQRModal() {
+    const container = document.getElementById('qr-modal-qr');
+    if (!container || typeof QRCode === 'undefined') return;
+    container.innerHTML = '';
+    this.qrModalInstance = new QRCode(container, {
+      text:         this.buildToken(),
+      width:        320,
+      height:       320,
+      colorDark:    '#0a0a1f',
+      colorLight:   '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H,
+    });
+
+    // Preenche header do modal
+    setText('qr-modal-inst', this.institution.abbr || '—');
+    setText('qr-modal-name', this.student.name || '—');
+    setText('qr-modal-id',   (this.student.idLabel || 'ID') + ': ' + (this.student.idNumber || '—'));
+  },
+
+  bindZoom() {
+    const btnOpen = document.getElementById('btn-zoom-qr');
+    const btnClose = document.getElementById('btn-close-qr');
+    const modal = document.getElementById('qr-modal');
+    if (!btnOpen || !modal) return;
+
+    const open = () => {
+      modal.classList.add('visible');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      modal.classList.remove('visible');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    btnOpen.addEventListener('click', open);
+    btnClose?.addEventListener('click', close);
+    modal.querySelectorAll('[data-close-qr]').forEach(el => el.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('visible')) close();
     });
   },
 };
