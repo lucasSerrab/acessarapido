@@ -1,0 +1,17 @@
+# Sistema operacional
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Backups e ZIPs gerados
+*.zip
+*.bak
+*.tmp
+
+# Logs
+*.log

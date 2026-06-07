@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="AcessaRápido — Carteirinha digital para universidades, escolas técnicas e ensino básico. QR de validação dinâmica para catraca, boletim, materiais e mais." />
+  <title>AcessaRápido — Carteirinha digital para sua instituição</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="landing-body">
+
+  <!-- ══════════ NAV ══════════ -->
+  <nav class="landing-nav">
+    <div class="container landing-nav__inner">
+      <a href="index.html" class="brand">
+        <span class="brand__mark"></span>
+        <span class="brand__text">Acessa<strong>Rápido</strong></span>
+      </a>
+      <div class="landing-nav__links">
+        <a href="#features">Recursos</a>
+        <a href="#audiences">Para quem</a>
+        <a href="#cta">Começar</a>
+      </div>
+      <div class="landing-nav__cta">
+        <a href="login.html" class="btn btn--ghost">Entrar</a>
+        <a href="login.html" class="btn btn--primary">Começar agora</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__content">
+        <span class="hero__pretitle">
+          <span class="dot"></span>
+          Plataforma em desenvolvimento
+        </span>
+        <h1>
+          A carteirinha estudantil <span class="highlight">do seu jeito</span>, no celular.
+        </h1>
+        <p class="hero__lead">
+          Um único app para identificar alunos, professores e funcionários. QR Code dinâmico
+          para catraca, boletim em tempo real, apostilas e canal direto com a instituição.
+        </p>
+        <div class="hero__cta">
+          <a href="login.html" class="btn btn--primary btn--lg">
+            <i class="fas fa-rocket"></i>
+            Acessar plataforma
+          </a>
+          <a href="#features" class="btn btn--secondary btn--lg">
+            <i class="fas fa-circle-play"></i>
+            Ver recursos
+          </a>
+        </div>
+
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <strong>15s</strong>
+            <span>Rotação de QR</span>
+          </div>
+          <div class="hero__stat">
+            <strong>8+</strong>
+            <span>Tipos de carteirinha</span>
+          </div>
+          <div class="hero__stat">
+            <strong>100%</strong>
+            <span>Mobile-ready</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mockup mobile -->
+      <div class="hero__mockup">
+        <div class="mockup-card-deco mockup-card-deco--1"></div>
+        <div class="mockup-card-deco mockup-card-deco--2"></div>
+
+        <div class="mockup-phone">
+          <div class="mockup-screen">
+            <div class="mockup-screen__title">Sua carteirinha</div>
+
+            <!-- Card real renderizado em escala -->
+            <div class="id-scene" style="max-width: 240px;">
+              <div class="id-card">
+                <div class="id-face id-face--front">
+                  <div class="id-front__brand" style="background:#0b1f3f">
+                    <div class="id-front__logo" style="background:#10b981">U</div>
+                    <div class="id-front__inst-info">
+                      <strong>UNICID</strong>
+                      <span>Universidade Cidade de S. Paulo</span>
+                    </div>
+                  </div>
+                  <div class="id-front__body">
+                    <div class="id-front__photo">
+                      <div class="id-front__photo-ph" style="background: linear-gradient(135deg, #10b981, #0b1f3f)">L</div>
+                    </div>
+                    <div class="id-front__data">
+                      <div class="id-front__name">Lucas Serra Barreto</div>
+                      <div class="id-front__course">Ciência da Computação</div>
+                      <div class="id-front__fields">
+                        <div class="id-field">
+                          <span class="id-field__label">RGM</span>
+                          <span class="id-field__value">04081939-6</span>
+                        </div>
+                        <div class="id-field">
+                          <span class="id-field__label">Validade</span>
+                          <span class="id-field__value">12/2026</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="id-front__footer" style="background:#dbeafe">
+                    <div class="id-front__chip"></div>
+                    <div class="id-front__validity">GRADUAÇÃO EAD</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /card -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FEATURES ══════════ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section__head">
+        <div class="section__eyebrow">Recursos</div>
+        <h2 class="section__title">Tudo que sua instituição precisa em um único lugar</h2>
+        <p class="section__lead">
+          Uma plataforma completa para identificação digital, comunicação e gestão acadêmica
+          do dia a dia.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature__icon"><i class="fas fa-id-card"></i></div>
+          <h3>Carteirinha digital</h3>
+          <p>Cartão virtual com chip, foto e dados oficiais. Sempre atualizado e disponível no celular do aluno.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon"><i class="fas fa-qrcode"></i></div>
+          <h3>QR Code dinâmico</h3>
+          <p>Token rotativo a cada 15 segundos, sincronizado com o relógio do servidor. Impossível de copiar e reusar.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Boletim em tempo real</h3>
+          <p>Notas, faltas e médias atualizadas automaticamente. Acompanhamento por período letivo.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon"><i class="fas fa-folder-open"></i></div>
+          <h3>Apostilas e materiais</h3>
+          <p>Biblioteca digital de PDFs, slides e notebooks. Disponíveis a qualquer hora, em qualquer lugar.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon"><i class="fas fa-bullhorn"></i></div>
+          <h3>Canal da instituição</h3>
+          <p>Comunicados oficiais, calendário acadêmico e contatos. Tudo concentrado no seu app.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon"><i class="fas fa-mobile-screen"></i></div>
+          <h3>Mobile-first</h3>
+          <p>Interface pensada para o celular do aluno. Rápida, leve e funciona em qualquer aparelho.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ AUDIENCES ══════════ -->
+  <section class="section" id="audiences" style="padding-top:0">
+    <div class="container">
+      <div class="section__head">
+        <div class="section__eyebrow">Para quem</div>
+        <h2 class="section__title">Universidades, escolas e cursos técnicos</h2>
+      </div>
+
+      <div class="audiences">
+        <div class="audience">
+          <i class="fas fa-graduation-cap"></i>
+          <strong>Graduação</strong>
+          <span>Bacharel, licenciatura, EAD</span>
+        </div>
+        <div class="audience">
+          <i class="fas fa-user-graduate"></i>
+          <strong>Pós-graduação</strong>
+          <span>MBA, especialização</span>
+        </div>
+        <div class="audience">
+          <i class="fas fa-tools"></i>
+          <strong>Cursos técnicos</strong>
+          <span>ETEC, SENAI, SENAC</span>
+        </div>
+        <div class="audience">
+          <i class="fas fa-school"></i>
+          <strong>Ensino básico</strong>
+          <span>Fundamental e médio</span>
+        </div>
+        <div class="audience">
+          <i class="fas fa-chalkboard-user"></i>
+          <strong>Professores</strong>
+          <span>Docentes e coordenação</span>
+        </div>
+        <div class="audience">
+          <i class="fas fa-briefcase"></i>
+          <strong>Funcionários</strong>
+          <span>Equipe administrativa</span>
+        </div>
+        <div class="audience">
+          <i class="fas fa-users-line"></i>
+          <strong>Visitantes</strong>
+          <span>Acesso temporário</span>
+        </div>
+        <div class="audience">
+          <i class="fas fa-user-shield"></i>
+          <strong>Segurança</strong>
+          <span>Validação na portaria</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CTA ══════════ -->
+  <section class="container" id="cta">
+    <div class="cta-section">
+      <h2>Pronto para modernizar sua instituição?</h2>
+      <p>Acesse a plataforma e descubra como o AcessaRápido pode transformar a vida acadêmica do seu campus.</p>
+      <a href="login.html" class="btn btn--primary btn--lg">
+        <i class="fas fa-arrow-right"></i>
+        Acessar agora
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="landing-footer__top">
+        <div class="landing-footer__about">
+          <a href="index.html" class="brand">
+            <span class="brand__mark"></span>
+            <span class="brand__text">Acessa<strong>Rápido</strong></span>
+          </a>
+          <p>A solução completa de identificação digital e gestão acadêmica para instituições de ensino do Brasil.</p>
+        </div>
+        <div class="landing-footer__cols">
+          <div>
+            <h4>Plataforma</h4>
+            <a href="#features">Recursos</a>
+            <a href="#audiences">Para quem</a>
+            <a href="login.html">Entrar</a>
+          </div>
+          <div>
+            <h4>Empresa</h4>
+            <a href="#">Sobre</a>
+            <a href="#">Contato</a>
+            <a href="#">Blog</a>
+          </div>
+          <div>
+            <h4>Legal</h4>
+            <a href="#">Privacidade</a>
+            <a href="#">Termos</a>
+            <a href="#">LGPD</a>
+          </div>
+        </div>
+      </div>
+      <div class="landing-footer__bottom">
+        <span>© 2026 acessarapido.com.br · Todos os direitos reservados.</span>
+        <span>Versão de desenvolvimento</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/seed.js"></script>
+  <script>
+    // Inicializa o banco com dados de demo na primeira visita
+    seedIfEmpty().catch(console.error);
+  </script>
+</body>
+</html>

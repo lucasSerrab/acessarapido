@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Entrar — AcessaRápido</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="login-body">
+
+  <!-- ══════════ LADO ESQUERDO (decorativo) ══════════ -->
+  <aside class="login-side">
+    <div class="login-side__top">
+      <a href="index.html" class="brand brand--dark">
+        <span class="brand__mark"></span>
+        <span class="brand__text">Acessa<strong>Rápido</strong></span>
+      </a>
+    </div>
+
+    <div class="login-side__main">
+      <h2>Bem-vindo<br />de volta!</h2>
+      <p>Acesse sua carteirinha digital, boletim, materiais e tudo da sua instituição em um só lugar.</p>
+
+      <!-- Card decorativo -->
+      <div class="login-side__card-deco">
+        <div>
+          <strong>Carteirinha Digital</strong>
+          <span>Validação em tempo real</span>
+        </div>
+        <div class="login-side__card-deco-bottom">
+          <div class="login-side__card-deco-id">04 0819 39-6</div>
+          <i class="fas fa-bolt" style="color:#facc15; font-size:18px"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-side__bottom">
+      © 2026 acessarapido.com.br
+    </div>
+  </aside>
+
+  <!-- ══════════ FORMULÁRIO ══════════ -->
+  <main class="login-form-wrap">
+    <form class="login-form" id="login-form" novalidate>
+      <h1>Entrar na conta</h1>
+      <p class="login-form__lead">Digite seu login institucional para continuar</p>
+
+      <div class="login-form__error" id="login-error">
+        <i class="fas fa-circle-exclamation"></i>
+        <span id="login-error-msg">Erro</span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="login-input">Usuário</label>
+        <div class="input-wrap">
+          <i class="fas fa-user input-wrap__icon"></i>
+          <input class="input input--icon" id="login-input" type="text"
+                 placeholder="aluno, professor ou admin" autocomplete="username" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="password-input">Senha</label>
+        <div class="input-wrap">
+          <i class="fas fa-lock input-wrap__icon"></i>
+          <input class="input input--icon" id="password-input" type="password"
+                 placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+      </div>
+
+      <a href="#" class="login-form__forgot">Esqueci minha senha</a>
+
+      <button type="submit" class="btn btn--primary btn--block btn--lg" id="btn-submit">
+        <i class="fas fa-arrow-right-to-bracket"></i>
+        Entrar
+      </button>
+
+      <div class="login-form__demo">
+        <strong><i class="fas fa-flask"></i> Contas de demonstração</strong>
+        <div class="demo-row"><span>Aluno</span>     <code>aluno</code> · <code>1234</code></div>
+        <div class="demo-row"><span>Professor</span> <code>professor</code> · <code>1234</code></div>
+        <div class="demo-row"><span>Admin</span>     <code>admin</code> · <code>admin123</code></div>
+      </div>
+
+      <a href="index.html" class="login-form__back">
+        <i class="fas fa-arrow-left"></i>
+        Voltar à página inicial
+      </a>
+    </form>
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/login-page.js"></script>
+</body>
+</html>

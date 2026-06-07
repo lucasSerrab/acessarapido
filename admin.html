@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Painel Admin — AcessaRápido</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="app-body">
+
+  <!-- ══════════ SIDEBAR ══════════ -->
+  <aside class="app-sidebar">
+    <div class="app-sidebar__header">
+      <a href="index.html" class="brand">
+        <span class="brand__mark"></span>
+        <span class="brand__text">Acessa<strong>Rápido</strong></span>
+      </a>
+    </div>
+
+    <nav class="app-sidebar__nav">
+      <button class="nav-item active" data-tab="students">
+        <i class="nav-item__icon fas fa-id-card"></i>
+        <span>Carteirinhas</span>
+      </button>
+      <button class="nav-item" data-tab="users">
+        <i class="nav-item__icon fas fa-users"></i>
+        <span>Usuários</span>
+      </button>
+      <button class="nav-item" data-tab="institution">
+        <i class="nav-item__icon fas fa-university"></i>
+        <span>Instituição</span>
+      </button>
+      <button class="nav-item" data-tab="advanced">
+        <i class="nav-item__icon fas fa-sliders"></i>
+        <span>Avançado</span>
+      </button>
+    </nav>
+
+    <div class="app-sidebar__footer">
+      <div class="user-card">
+        <div class="user-card__avatar" style="background: var(--accent-500); color: var(--brand-950)">A</div>
+        <div class="user-card__info">
+          <strong id="admin-name">admin</strong>
+          <span>Administrador</span>
+        </div>
+      </div>
+      <button class="btn-logout" id="btn-logout">
+        <i class="fas fa-arrow-right-from-bracket"></i>
+        Sair
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════ MAIN ══════════ -->
+  <main class="app-main">
+    <header class="app-topbar">
+      <div class="app-topbar__title" id="page-title">Carteirinhas</div>
+      <div class="app-topbar__actions">
+        <a href="app.html" class="btn btn--ghost"><i class="fas fa-eye"></i> Ver como aluno</a>
+      </div>
+    </header>
+
+    <div class="app-content">
+
+      <!-- ═══════ ABA: CARTEIRINHAS (Students) ═══════ -->
+      <section class="admin-tab-content active" id="tab-students">
+        <div class="page-header">
+          <div>
+            <h2>Gerenciar carteirinhas</h2>
+            <p>Cadastre e edite alunos, professores e funcionários.</p>
+          </div>
+          <button class="btn btn--primary" id="btn-new-student">
+            <i class="fas fa-plus"></i> Nova carteirinha
+          </button>
+        </div>
+
+        <div class="users-table-wrap">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Tipo</th>
+                <th>Curso / Cargo</th>
+                <th>ID</th>
+                <th>Validade</th>
+                <th style="text-align:right">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="students-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ═══════ ABA: USUÁRIOS ═══════ -->
+      <section class="admin-tab-content" id="tab-users">
+        <div class="page-header">
+          <div>
+            <h2>Usuários do sistema</h2>
+            <p>Logins, senhas e permissões.</p>
+          </div>
+          <button class="btn btn--primary" id="btn-new-user">
+            <i class="fas fa-user-plus"></i> Novo usuário
+          </button>
+        </div>
+
+        <div class="users-table-wrap">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Login</th>
+                <th>Papel</th>
+                <th>Vinculado a</th>
+                <th>Criado em</th>
+                <th style="text-align:right">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ═══════ ABA: INSTITUIÇÃO ═══════ -->
+      <section class="admin-tab-content" id="tab-institution">
+        <div class="page-header">
+          <div>
+            <h2>Dados da instituição</h2>
+            <p>Configure aparência, contatos e comunicados.</p>
+          </div>
+          <button class="btn btn--primary" id="btn-save-inst">
+            <i class="fas fa-floppy-disk"></i> Salvar
+          </button>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section__head">
+            <i class="fas fa-pen"></i> Identidade visual
+          </div>
+          <div class="form-section__body">
+            <div class="form-grid">
+              <div class="field">
+                <label class="field__label" for="inst-form-abbr">Sigla</label>
+                <input class="input" id="inst-form-abbr" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="inst-form-full">Nome completo</label>
+                <input class="input" id="inst-form-full" />
+              </div>
+              <div class="field">
+                <label class="field__label">Cor do logo</label>
+                <div class="color-row">
+                  <input type="color" id="inst-form-logocolor" />
+                  <span class="color-hex" id="hex-logocolor">#000000</span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="field__label">Cor do banner</label>
+                <div class="color-row">
+                  <input type="color" id="inst-form-bannercolor" />
+                  <span class="color-hex" id="hex-bannercolor">#000000</span>
+                </div>
+              </div>
+              <div class="field">
+                <label class="field__label">Cor de destaque</label>
+                <div class="color-row">
+                  <input type="color" id="inst-form-accentcolor" />
+                  <span class="color-hex" id="hex-accentcolor">#000000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section__head">
+            <i class="fas fa-phone"></i> Contato e localização
+          </div>
+          <div class="form-section__body">
+            <div class="form-grid">
+              <div class="field form-grid__full">
+                <label class="field__label" for="inst-form-address">Endereço</label>
+                <input class="input" id="inst-form-address" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="inst-form-phone">Telefone</label>
+                <input class="input" id="inst-form-phone" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="inst-form-email">E-mail</label>
+                <input class="input" id="inst-form-email" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="inst-form-site">Site</label>
+                <input class="input" id="inst-form-site" />
+              </div>
+              <div class="field">
+                <label class="field__label" for="inst-form-hours">Horário</label>
+                <input class="input" id="inst-form-hours" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ ABA: AVANÇADO ═══════ -->
+      <section class="admin-tab-content" id="tab-advanced">
+        <div class="page-header">
+          <div>
+            <h2>Configurações avançadas</h2>
+            <p>Backup, restauração e gerenciamento do banco de dados.</p>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section__head">
+            <i class="fas fa-database"></i> Banco de dados
+          </div>
+          <div class="form-section__body" style="display:flex; flex-direction:column; gap:14px">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px">
+              <div>
+                <strong style="display:block; font-size:14px">Exportar dados</strong>
+                <small style="color: var(--gray-600)">Faz download de um JSON com tudo do banco.</small>
+              </div>
+              <button class="btn btn--secondary" id="btn-export"><i class="fas fa-download"></i> Exportar JSON</button>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px">
+              <div>
+                <strong style="display:block; font-size:14px">Importar dados</strong>
+                <small style="color: var(--gray-600)">Substitui todo o banco pelo conteúdo de um JSON exportado.</small>
+              </div>
+              <label class="btn btn--secondary" for="file-import"><i class="fas fa-upload"></i> Importar JSON</label>
+              <input type="file" id="file-import" accept=".json" style="display:none" />
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px">
+              <div>
+                <strong style="display:block; font-size:14px; color: var(--danger)">Resetar banco</strong>
+                <small style="color: var(--gray-600)">Apaga todos os dados e restaura o banco com dados padrão.</small>
+              </div>
+              <button class="btn btn--danger" id="btn-reset"><i class="fas fa-trash"></i> Resetar tudo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ══════════ MODAL: Editar/Novo aluno ══════════ -->
+  <div class="modal-overlay" id="modal-student">
+    <div class="modal">
+      <div class="modal__head">
+        <h3 id="modal-student-title">Nova carteirinha</h3>
+        <button class="modal__close" data-close-modal="modal-student"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="modal__body">
+        <input type="hidden" id="student-id" />
+
+        <div class="photo-uploader">
+          <div class="photo-uploader__preview" id="student-photo-preview">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="photo-uploader__actions">
+            <label class="btn btn--secondary" for="student-photo-input">
+              <i class="fas fa-upload"></i> Escolher foto
+            </label>
+            <input type="file" id="student-photo-input" accept="image/*" style="display:none" />
+            <button type="button" class="btn btn--ghost" id="student-photo-remove" style="color: var(--danger)">
+              <i class="fas fa-trash"></i> Remover
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="student-name">Nome completo</label>
+          <input class="input" id="student-name" />
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="student-cardtype">Tipo</label>
+            <select class="select" id="student-cardtype">
+              <option value="graduacao">Graduação</option>
+              <option value="graduacao_ead">Graduação EAD</option>
+              <option value="posgraduacao">Pós-Graduação</option>
+              <option value="tecnico">Técnico</option>
+              <option value="ensinoMedio">Ensino Médio</option>
+              <option value="ensinoFundamental">Ensino Fundamental</option>
+              <option value="professor">Professor / Docente</option>
+              <option value="funcionario">Funcionário</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-course">Curso / Cargo</label>
+            <input class="input" id="student-course" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-idlabel">Tipo de ID</label>
+            <select class="select" id="student-idlabel">
+              <option>RGM</option><option>RA</option><option>Matrícula</option>
+              <option>RE</option><option>RG</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-idnumber">Número do ID</label>
+            <input class="input" id="student-idnumber" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-validity">Validade (MM/AAAA)</label>
+            <input class="input" id="student-validity" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-birth">Nascimento</label>
+            <input class="input" id="student-birth" placeholder="DD/MM/AAAA" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-rg">RG</label>
+            <input class="input" id="student-rg" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-blood">Tipo sanguíneo</label>
+            <select class="select" id="student-blood">
+              <option value="">—</option>
+              <option>A+</option><option>A−</option>
+              <option>B+</option><option>B−</option>
+              <option>O+</option><option>O−</option>
+              <option>AB+</option><option>AB−</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-semester">Semestre</label>
+            <input class="input" id="student-semester" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="student-emerg">Contato emergência</label>
+            <input class="input" id="student-emerg" />
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" data-close-modal="modal-student">Cancelar</button>
+        <button class="btn btn--primary" id="btn-save-student">
+          <i class="fas fa-floppy-disk"></i> Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ MODAL: Novo/Editar usuário ══════════ -->
+  <div class="modal-overlay" id="modal-user">
+    <div class="modal">
+      <div class="modal__head">
+        <h3 id="modal-user-title">Novo usuário</h3>
+        <button class="modal__close" data-close-modal="modal-user"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="modal__body">
+        <input type="hidden" id="user-id" />
+        <div class="field">
+          <label class="field__label" for="user-login">Login</label>
+          <input class="input" id="user-login" />
+        </div>
+        <div class="field">
+          <label class="field__label" for="user-pass">Senha <small id="user-pass-hint" style="color:var(--gray-500)">(mín. 4 caracteres)</small></label>
+          <input class="input" id="user-pass" type="password" />
+        </div>
+        <div class="field">
+          <label class="field__label" for="user-role">Papel</label>
+          <select class="select" id="user-role">
+            <option value="aluno">Aluno</option>
+            <option value="professor">Professor</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+        <div class="field" id="user-student-wrap">
+          <label class="field__label" for="user-student">Carteirinha vinculada</label>
+          <select class="select" id="user-student">
+            <option value="">—</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" data-close-modal="modal-user">Cancelar</button>
+        <button class="btn btn--primary" id="btn-save-user">
+          <i class="fas fa-floppy-disk"></i> Salvar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/db.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/seed.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
